@@ -1,0 +1,227 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "./generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Pet {
+  id String @id @default(uuid())
+  microchipId String? @unique
+  microchipRegistry String?
+  microchipDate DateTime?
+  name String
+  type PetType
+  breed String?
+  dateOfBirth DateTime
+  weight Float
+  weightUnit WeightUnit
+  sex PetSex
+  neutered Boolean?
+  ownerId String
+  owner PetOwner @relation(fields: [ownerId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  treatments Treatment[]
+  immunizations Immunization[]
+  diagnostics Diagnostic[]
+  medications Medication[]
+  medicalRecords MedicalRecord[]
+
+  @@map("pets")
+}
+
+model PetOwner {
+  id String @id @default(uuid())
+  firstName String
+  lastName String
+  email String @unique
+  passwordHash String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  emergencyContacts EmergencyContact[]
+  pets Pet[]
+
+  @@map("pet_owners")
+}
+
+model EmergencyContact {
+  id String @id @default(uuid())
+  petOwnerId String
+  petOwner PetOwner @relation(fields: [petOwnerId], references: [id])
+  petId String?
+  firstName String
+  lastName String
+  relationship ContactRelation
+  email String
+  phone String
+  isPrimary Boolean
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  vetMedicalRecords MedicalRecord[]
+
+  @@map("emergency_contacts")
+}
+
+model MedicalRecord {
+  id String @id @default(uuid())
+  petId String
+  pet Pet @relation(fields: [petId], references: [id])
+  recordDate DateTime
+  vetContactId String?
+  vetName String?
+  vet EmergencyContact? @relation(fields: [vetContactId], references: [id])
+  notes String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  treatments Treatment[]
+  immunizations Immunization[]
+  diagnostics Diagnostic[]
+  medications Medication[]
+  
+  @@index([petId])
+
+  @@map("medical_records")
+}
+
+model Treatment {
+  id String @id @default(uuid())
+  petId String
+  medicalRecordId String?
+  name String
+  date DateTime
+  notes String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  pet Pet @relation(fields: [petId], references: [id])
+  medicalRecord MedicalRecord? @relation(fields: [medicalRecordId], references: [id])
+
+  @@index([petId])
+  @@index([medicalRecordId])
+
+  @@map("treatments")
+}
+
+model Immunization {
+  id String @id @default(uuid())
+  petId String
+  medicalRecordId String?
+  name String
+  dateAdministered DateTime
+  nextDueDate DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  pet Pet @relation(fields: [petId], references: [id])
+  medicalRecord MedicalRecord? @relation(fields: [medicalRecordId], references: [id])
+
+  @@index([petId])
+  @@index([medicalRecordId])
+
+  @@map("immunizations")
+}
+
+model Diagnostic {
+  id String @id @default(uuid())
+  petId String
+  medicalRecordId String?
+  type DiagnosticType
+  date DateTime
+  result String?
+  notes String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  pet Pet @relation(fields: [petId], references: [id])
+  medicalRecord MedicalRecord? @relation(fields: [medicalRecordId], references: [id])
+
+  @@index([petId])
+  @@index([medicalRecordId])
+
+  @@map("diagnostics")
+}
+
+model Medication {
+  id String @id @default(uuid())
+  petId String
+  medicalRecordId String?
+  name String
+  dosageAmount Float
+  dosageUnit DosageUnit
+  frequency String
+  startDate DateTime
+  endDate DateTime?
+  status MedicationStatus
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  pet Pet @relation(fields: [petId], references: [id])
+  medicalRecord MedicalRecord? @relation(fields: [medicalRecordId], references: [id])
+
+  @@index([petId])
+  @@index([medicalRecordId])
+
+  @@map("medications")
+}
+
+
+
+
+
+enum PetType {
+  DOG
+  CAT 
+  BIRD 
+}
+
+enum PetSex {
+  MALE
+  FEMALE
+  UNKNOWN
+}
+
+enum ContactRelation {
+  SPOUSE
+  NEIGHBOR
+  VET
+  FAMILY_MEMBER
+  OTHER
+}
+enum DiagnosticType {
+  BLOODWORK
+  XRAY
+  ULTRASOUND
+  URINALYSIS
+  FECAL
+  BIOPSY
+  OTHER
+}
+
+enum DosageUnit {
+  MG
+  ML
+  TABLET
+  DROP
+}
+
+enum MedicationStatus {
+  ACTIVE
+  COMPLETED
+  DISCONTINUED
+}
+
+enum WeightUnit {
+  KG
+  LB
+}

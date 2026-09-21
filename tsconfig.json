@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "resolvePackageJsonExports": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "isolatedModules": true,
     "declaration": true,
@@ -20,5 +19,10 @@
     "strictPropertyInitialization": false,
     "types": ["vitest/globals", "node"],
     "ignoreDeprecations": "6.0"
-  }
+  },
+  "include": [
+    "src/**/*",
+    "prisma/**/*.ts",
+    "prisma7.config.ts"
+  ]
 }

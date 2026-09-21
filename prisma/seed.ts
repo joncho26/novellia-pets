@@ -5,7 +5,7 @@ import {
     MedicationStatus,
     WeightUnit, 
     DosageUnit, 
-    DiagnosticType } from "./generated/prisma/enums"
+    DiagnosticType } from "../src/generated/prisma/enums"
 import { prisma } from "./lib/prisma"
 
 async function main() {
@@ -31,7 +31,7 @@ async function main() {
             type: PetType.DOG,
             ownerId: owner1.id,
             breed: 'Dachshund',
-            dateOfBirth: '2020-01-01',
+            dateOfBirth: new Date('2025-05-01'),
             weight: 10,
             weightUnit: WeightUnit.LB,
             sex: PetSex.MALE,
@@ -45,7 +45,7 @@ async function main() {
             type: PetType.CAT,
             ownerId: owner2.id,
             breed: 'Persian',
-            dateOfBirth: '2025-8-8',
+            dateOfBirth: new Date('2025-8-8'),
             weight: 10,
             weightUnit: WeightUnit.LB,
             sex: PetSex.FEMALE,
@@ -69,14 +69,14 @@ async function main() {
     await prisma.medicalRecord.create({
         data: {
             petId: pet1.id,
-            recordDate: '2026-02-01',
+            recordDate: new Date('2026-02-01'),
             notes: 'Biscuit\'s Medical Record',
             immunizations: {
                 create: [
                     {
                         petId: pet1.id,
                         name: '',
-                        dateAdministered: '2026-05-03',
+                        dateAdministered: new Date('2026-05-03'),
                     }
                 ]
             },
@@ -87,7 +87,7 @@ async function main() {
                         dosageAmount: 1,
                         dosageUnit: DosageUnit.TABLET,
                         frequency: 'once a day',
-                        startDate: '2026-06-19',
+                        startDate: new Date('2026-06-19'),
                         status: MedicationStatus.ACTIVE,
                         petId: pet1.id
                     }
@@ -98,7 +98,7 @@ async function main() {
                     {
                         petId: pet1.id, 
                         type: DiagnosticType.BLOODWORK,
-                        date: '2026-08-08',
+                        date: new Date('2026-08-08'),
                         result: '',
                         notes: ''
                     }
@@ -109,7 +109,7 @@ async function main() {
                     {
                         petId: pet1.id,
                         name: 'Treatment 1',
-                        date: '2021-03-09',
+                        date: new Date('2021-03-09'),
                         notes: ''
                     }
                 ]
@@ -125,14 +125,14 @@ async function main() {
     const medicalRecord2 =  await prisma.medicalRecord.create({
         data: {
             petId: pet2.id,
-            recordDate: '2026-05-10',
+            recordDate: new Date('2026-05-10'),
             notes: 'Butter\'s Test Medical Record',
             immunizations: {
                 create: [
                     {
                         petId: pet2.id,
                         name: '',
-                        dateAdministered: '2026-12-19'
+                        dateAdministered: new Date('2026-12-19')
                     }
                 ]
             },
@@ -143,7 +143,7 @@ async function main() {
                         dosageAmount: 5,
                         dosageUnit: DosageUnit.TABLET,
                         frequency: 'every 12 hours',
-                        startDate: '2026-11-11',
+                        startDate: new Date('2026-11-11'),
                         status: MedicationStatus.COMPLETED,
                         petId: pet2.id
                     }
@@ -154,18 +154,18 @@ async function main() {
                     {
                         petId: pet2.id,
                         type: DiagnosticType.XRAY,
-                        date: '2026-04-12',
+                        date: new Date('2026-04-12'),
                         result: '',
                         notes: ''
                     }
                 ]
             },
-            treaments: {
+            treatments: {
                 create: [
                     {
                         petId: pet2.id,
                         name: 'Treatment 2',
-                        date: '2026-07-12',
+                        date: new Date('2026-07-12'),
                         notes: ''
                     }
                 ]

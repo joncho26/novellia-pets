@@ -85,7 +85,7 @@ async function main() {
     })
     await prisma.emergencyContact.create({
         data: {
-             petId: pet1.id,
+            petId: pet1.id,
             petOwnerId: owner1.id,
             firstName: 'Dante',
             lastName: 'Smith',
@@ -94,7 +94,18 @@ async function main() {
             phone: '5551234567',
             isPrimary: true
         }
-       
+    })
+    await prisma.emergencyContact.create({
+        data: {
+            petId: pet1.id,
+            petOwnerId: owner1.id,
+            firstName: 'Doc',
+            lastName: 'DoLittle',
+            relationship: ContactRelation.VET,
+            email: 'doctordolittle@testemail.com',
+            phone: '5559991234',
+            isPrimary: true
+        }
     })
     await prisma.medicalRecord.create({
         data: {

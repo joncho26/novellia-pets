@@ -9,7 +9,18 @@ export class MedicalRecordsController {
 
     @Post()
     createMedicalRecord(@Body() createMedicalRecordDto: CreateMedicalRecordDto) {
-        return this.medicalRecordsService.createMedicalRecord(createMedicalRecordDto);
+        const { treatments, immunizations, diagnostics, medications, ...details } = createMedicalRecordDto;
+        const { petId } = details;
+
+        // Nested creates run in one transaction, so a visit and everything
+        // recorded during it either all land or none of them do.
+        return this.medicalRecordsService.createMedicalRecord({
+            ...details,
+            treatments: treatments && { create: treatments.map((t) => ({ ...t, petId })) },
+            immunizations: immunizations && { create: immunizations.map((i) => ({ ...i, petId })) },
+            diagnostics: diagnostics && { create: diagnostics.map((d) => ({ ...d, petId })) },
+            medications: medications && { create: medications.map((m) => ({ ...m, petId })) },
+        });
     }
 
     @Get()

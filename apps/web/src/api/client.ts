@@ -1,5 +1,6 @@
 import type {
   CreateMedicalRecordRequest,
+  CreateMedicationRequest,
   CreatePetRequest,
   DashboardResponse,
   PetDetailResponse,
@@ -60,4 +61,8 @@ export function createPet(pet: CreatePetRequest) {
 
 export function createMedicalRecord(record: CreateMedicalRecordRequest) {
   return post<{ id: string }>('/medical-records', record)
+}
+
+export function createMedication(petId: string, medication: CreateMedicationRequest) {
+  return post<{ id: string }>(`/pets/${petId}/medications`, medication)
 }

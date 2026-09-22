@@ -32,6 +32,11 @@ function formatDate(date: Date) {
   return date.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })
 }
 
+// How far ahead the calendar reaches once future dates are allowed. Long
+// enough for any course of treatment, short enough to keep the year dropdown
+// scannable.
+const FUTURE_YEARS = 10
+
 type DateFieldProps = {
   id: string
   value: Date | undefined
@@ -39,6 +44,8 @@ type DateFieldProps = {
   className?: string
   invalid?: boolean
   describedBy?: string
+  // A birthday can't be in the future, but a medication's end date can.
+  allowFuture?: boolean
 }
 
 export function DateField({
@@ -48,10 +55,12 @@ export function DateField({
   className,
   invalid,
   describedBy,
+  allowFuture = false,
 }: DateFieldProps) {
   const [isOpen, setIsOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const today = new Date()
+  const lastMonth = allowFuture ? new Date(today.getFullYear() + FUTURE_YEARS, 11) : today
 
   // The calendar is a popover, so it has to dismiss the way one does: on Escape
   // and on any click that lands outside it.
@@ -126,9 +135,9 @@ export function DateField({
             style={CALENDAR_THEME}
             captionLayout="dropdown"
             startMonth={new Date(EARLIEST_YEAR, 0)}
-            endMonth={today}
+            endMonth={lastMonth}
             defaultMonth={value ?? today}
-            disabled={{ after: today }}
+            disabled={allowFuture ? undefined : { after: today }}
             selected={value}
             onSelect={(selected) => {
               onChange(selected)

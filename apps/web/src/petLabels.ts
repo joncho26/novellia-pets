@@ -1,4 +1,10 @@
-import { PetSex, PetType, WeightUnit } from '@api/generated/prisma/enums'
+import {
+  DosageUnit,
+  MedicationStatus,
+  PetSex,
+  PetType,
+  WeightUnit,
+} from '@api/generated/prisma/enums'
 import { Bird, Cat, Dog, type LucideIcon } from 'lucide-react'
 
 // Exhaustive by construction: adding a value to one of these Prisma enums
@@ -21,6 +27,20 @@ export const PET_SEX_LABEL: Record<PetSex, string> = {
   [PetSex.MALE]: 'Male',
   [PetSex.FEMALE]: 'Female',
   [PetSex.UNKNOWN]: 'Unknown',
+}
+
+export const DOSAGE_UNIT_LABEL: Record<DosageUnit, string> = {
+  [DosageUnit.MG]: 'mg',
+  [DosageUnit.ML]: 'ml',
+  [DosageUnit.TABLET]: 'tablet',
+  [DosageUnit.DROP]: 'drop',
+}
+
+export const MEDICATION_STATUS_LABEL: Record<MedicationStatus, string> = {
+  [MedicationStatus.ACTIVE]: 'Active',
+  [MedicationStatus.COMPLETED]: 'Completed',
+  [MedicationStatus.DISCONTINUED]: 'Discontinued',
+  [MedicationStatus.UNKNOWN]: 'Unknown',
 }
 
 export const WEIGHT_UNIT_LABEL: Record<WeightUnit, string> = {

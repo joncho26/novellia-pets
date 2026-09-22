@@ -7,7 +7,15 @@ export class MedicalRecordsService {
     constructor(private prisma: PrismaService) {}
 
     createMedicalRecord(data: Prisma.MedicalRecordUncheckedCreateInput) {
-        return this.prisma.medicalRecord.create({ data })
+        return this.prisma.medicalRecord.create({
+            data,
+            include: {
+                treatments: true,
+                immunizations: true,
+                diagnostics: true,
+                medications: true,
+            },
+        })
     }
 
     getMedicalRecords() {

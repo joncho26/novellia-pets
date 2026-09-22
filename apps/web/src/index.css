@@ -1,0 +1,77 @@
+@import 'tailwindcss';
+
+/* Design tokens. Utilities compile to var() references, so the dark-mode block
+   below re-points every `bg-page`, `text-heading`, `border-line` and friend at
+   once — no `dark:` variant needed at the call sites. */
+@theme {
+  --color-page: #fff;
+  --color-body: #252525;
+  --color-heading: #252525;
+  --color-line: #e5e2e3;
+
+  /* Brand maroon. `primary` fills buttons and always carries `on-primary`
+     text; `accent` is the same color used for outlines, borders and the
+     calendar's selection, and is the one that has to lighten on a dark page. */
+  --color-primary: #500014;
+  --color-primary-hover: #941f1c;
+  --color-on-primary: #fff;
+
+  /* Secondary text: the labels that divide a card into sections. Carried by
+     color rather than by dimming, so it structures the page instead of
+     receding from it. */
+  --color-secondary: #fb4d27;
+  --color-accent: #500014;
+  --color-accent-soft: rgba(80, 0, 20, 0.08);
+  --color-accent-line: rgba(80, 0, 20, 0.45);
+  --color-danger: #b3261e;
+
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-heading: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, Consolas, monospace;
+
+  --shadow-panel:
+    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-page: #16171d;
+    --color-body: #d4d0d1;
+    --color-heading: #f3f4f6;
+    --color-line: #34302f;
+
+    /* #500014 is near-invisible against a dark page, so the fill lifts a step
+       and the outline color becomes a tint of the same hue. */
+    --color-primary: #7a0020;
+    --color-accent: #e08a9b;
+    --color-accent-soft: rgba(224, 138, 155, 0.15);
+    --color-accent-line: rgba(224, 138, 155, 0.5);
+    --color-danger: #f2b8b5;
+
+    --shadow-panel:
+      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  }
+}
+
+/* Root typography only: everything with a box or a color is a utility class in
+   the markup. These are the properties Tailwind has no utility for, or that
+   have to land on :root before any component renders. */
+@layer base {
+  :root {
+    font: 18px/145% var(--font-sans);
+    letter-spacing: 0.18px;
+    color-scheme: light dark;
+    color: var(--color-body);
+    background: var(--color-page);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  @media (max-width: 1024px) {
+    :root {
+      font-size: 16px;
+    }
+  }
+}

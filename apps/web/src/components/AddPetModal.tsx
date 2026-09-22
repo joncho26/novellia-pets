@@ -1,20 +1,11 @@
-import { useEffect, useId, useRef, useState, type FormEvent } from 'react'
-import { X } from 'lucide-react'
+import { useId, useState, type FormEvent } from 'react'
 import { PetSex, PetType, WeightUnit } from '@api/generated/prisma/enums'
 import { createPet } from '../api/client'
 import type { CreatePetRequest } from '../api/types'
 import { PET_SEX_LABEL, PET_TYPE_LABEL, WEIGHT_UNIT_LABEL } from '../petLabels'
 import { DateField } from './DateField'
-import { CTA_BUTTON } from '../styles'
-
-// Every control in the form wears the same skin, so it is written once here
-// rather than eight times in the markup.
-const STYLES = {
-  CONTROL: 'box-border w-full rounded-[0.4rem] border border-line bg-page px-[0.6rem] py-2 text-[0.95rem] text-heading focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent aria-[invalid=true]:border-danger',
-  LABEL: 'text-[0.8rem] uppercase tracking-[0.04em] opacity-65',
-  FIELD: 'flex flex-col gap-[0.35rem]',
-  SECONDARY_BUTTON: 'cursor-pointer rounded-[0.4rem] border border-line px-4 py-2 text-[0.95rem] text-heading disabled:cursor-not-allowed disabled:opacity-60'
-}
+import { Modal } from './Modal'
+import { CTA_BUTTON, STYLES } from '../styles'
 
 // Selects start blank so an untouched form can never file a cat as a dog. The
 // empty string is the "nothing chosen yet" value for each of them.
@@ -78,17 +69,11 @@ type AddPetModalProps = {
 }
 
 export function AddPetModal({ ownerId, onClose, onCreated }: AddPetModalProps) {
-  const dialogRef = useRef<HTMLDialogElement>(null)
   const fieldId = useId()
   const [form, setForm] = useState<FormState>(EMPTY_FORM)
   const [errors, setErrors] = useState<FormErrors>({})
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [isSaving, setIsSaving] = useState(false)
-
-  // showModal() is what gives us the backdrop, the focus trap and Escape.
-  useEffect(() => {
-    dialogRef.current?.showModal()
-  }, [])
 
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((current) => ({ ...current, [key]: value }))
@@ -143,30 +128,8 @@ export function AddPetModal({ ownerId, onClose, onCreated }: AddPetModalProps) {
   }
 
   return (
-    // The dialog is only a transparent positioning box now: the panel styling
-    // moved to the form so the close button can sit outside it, over the
-    // backdrop, without being clipped by the form's own scrolling.
-    <dialog
-      ref={dialogRef}
-      onClose={onClose}
-      className="m-auto w-[30rem] max-w-[calc(100vw-2rem)] overflow-visible bg-transparent p-0 text-body backdrop:bg-black/45"
-    >
-      {/* Absolute against the dialog's own box, which the browser has already
-          centered, so it lands just off the panel's top-right corner. */}
-      <button
-        type="button"
-        className="absolute -top-12 right-0 flex size-9 cursor-pointer items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-        onClick={() => dialogRef.current?.close()}
-        aria-label="Close"
-      >
-        <X size={18} aria-hidden="true" />
-      </button>
-
-      <form
-        className="flex max-h-[80vh] flex-col gap-4 overflow-y-auto rounded-xl border border-line bg-page p-6 text-left shadow-panel"
-        onSubmit={handleSubmit}
-        noValidate
-      >
+    <Modal onClose={onClose} label="Add a pet">
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit} noValidate>
         <h2 className="m-0 font-heading text-[24px] leading-[118%] font-medium tracking-[-0.24px] text-primary">
           Add a pet
         </h2>
@@ -314,7 +277,7 @@ export function AddPetModal({ ownerId, onClose, onCreated }: AddPetModalProps) {
           <button
             type="button"
             className={STYLES.SECONDARY_BUTTON}
-            onClick={() => dialogRef.current?.close()}
+            onClick={onClose}
             disabled={isSaving}
           >
             Cancel
@@ -324,6 +287,6 @@ export function AddPetModal({ ownerId, onClose, onCreated }: AddPetModalProps) {
           </button>
         </div>
       </form>
-    </dialog>
+    </Modal>
   )
 }

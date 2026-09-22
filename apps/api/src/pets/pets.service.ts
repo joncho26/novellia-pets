@@ -1,6 +1,8 @@
 import { HttpException, Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { Prisma } from "../generated/prisma/client";
+import { PetDetail, VetContact } from "./types/PetDetail";
+import { ContactRelation } from "../generated/prisma/enums";
 
 @Injectable()
 export class PetsService {
@@ -14,7 +16,7 @@ export class PetsService {
         return this.prisma.pet.findMany();
     }
 
-    getPetById(id: string){
+    getPetById(id: string): Promise<PetDetail | null> {
         return this.prisma.pet.findUnique({
             where: { id },
             include: {
@@ -32,6 +34,23 @@ export class PetsService {
                 },
             },
         })
+    }
+
+    // The vets on the owner's contact list, whether or not they are tied to
+    // this particular pet. Returns null when the pet does not exist, so the
+    // controller can tell "no such pet" from "no vets on file".
+    async getVetContactsByPetId(id: string): Promise<VetContact[] | null> {
+        const pet = await this.prisma.pet.findUnique({
+            where: { id },
+            select: { ownerId: true },
+        });
+        if (!pet) return null;
+
+        return this.prisma.emergencyContact.findMany({
+            where: { petOwnerId: pet.ownerId, relationship: ContactRelation.VET },
+            orderBy: [{ lastName: 'asc' }, { firstName: 'asc' }],
+            select: { id: true, firstName: true, lastName: true },
+        });
     }
 
     // Update and delete only need to know whether the row is there. Reusing

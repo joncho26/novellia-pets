@@ -1,4 +1,10 @@
-import type { CreatePetRequest, DashboardResponse } from './types'
+import type {
+  CreateMedicalRecordRequest,
+  CreatePetRequest,
+  DashboardResponse,
+  PetDetailResponse,
+  VetContactResponse,
+} from './types'
 
 const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000'
 
@@ -32,10 +38,26 @@ export function getDashboard() {
   return request<DashboardResponse>('/dashboard')
 }
 
-export function createPet(pet: CreatePetRequest) {
-  return request<{ id: string }>('/pets', {
+export function getPet(petId: string) {
+  return request<PetDetailResponse>(`/pets/${petId}`)
+}
+
+export function getVetContacts(petId: string) {
+  return request<VetContactResponse[]>(`/pets/${petId}/vet-contacts`)
+}
+
+function post<T>(path: string, body: unknown) {
+  return request<T>(path, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(pet),
+    body: JSON.stringify(body),
   })
+}
+
+export function createPet(pet: CreatePetRequest) {
+  return post<{ id: string }>('/pets', pet)
+}
+
+export function createMedicalRecord(record: CreateMedicalRecordRequest) {
+  return post<{ id: string }>('/medical-records', record)
 }

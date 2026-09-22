@@ -25,6 +25,14 @@ export class PetsController {
         return pet;
     }
 
+    @Get(':id/vet-contacts')
+    async getVetContactsByPetId(@Param('id', ParseUUIDPipe) id: string) {
+        const contacts = await this.petsService.getVetContactsByPetId(id);
+        if (!contacts) throw new NotFoundException("Pet not found");
+
+        return contacts;
+    }
+
     @Patch(':id')
     updatePetById(
         @Param('id', ParseUUIDPipe) id: string,

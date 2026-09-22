@@ -65,6 +65,11 @@ export type MedicalRecord = Prisma.MedicalRecordModel
  */
 export type Treatment = Prisma.TreatmentModel
 /**
+ * Model Vaccine
+ * 
+ */
+export type Vaccine = Prisma.VaccineModel
+/**
  * Model Immunization
  * 
  */

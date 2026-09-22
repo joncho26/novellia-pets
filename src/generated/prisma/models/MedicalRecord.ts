@@ -171,7 +171,7 @@ export type MedicalRecordGroupByOutputType = {
   recordDate: Date
   vetContactId: string | null
   vetName: string | null
-  notes: string
+  notes: string | null
   createdAt: Date
   updatedAt: Date
   _count: MedicalRecordCountAggregateOutputType | null
@@ -203,7 +203,7 @@ export type MedicalRecordWhereInput = {
   recordDate?: Prisma.DateTimeFilter<"MedicalRecord"> | Date | string
   vetContactId?: Prisma.StringNullableFilter<"MedicalRecord"> | string | null
   vetName?: Prisma.StringNullableFilter<"MedicalRecord"> | string | null
-  notes?: Prisma.StringFilter<"MedicalRecord"> | string
+  notes?: Prisma.StringNullableFilter<"MedicalRecord"> | string | null
   createdAt?: Prisma.DateTimeFilter<"MedicalRecord"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"MedicalRecord"> | Date | string
   pet?: Prisma.XOR<Prisma.PetScalarRelationFilter, Prisma.PetWhereInput>
@@ -220,7 +220,7 @@ export type MedicalRecordOrderByWithRelationInput = {
   recordDate?: Prisma.SortOrder
   vetContactId?: Prisma.SortOrderInput | Prisma.SortOrder
   vetName?: Prisma.SortOrderInput | Prisma.SortOrder
-  notes?: Prisma.SortOrder
+  notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   pet?: Prisma.PetOrderByWithRelationInput
@@ -240,7 +240,7 @@ export type MedicalRecordWhereUniqueInput = Prisma.AtLeast<{
   recordDate?: Prisma.DateTimeFilter<"MedicalRecord"> | Date | string
   vetContactId?: Prisma.StringNullableFilter<"MedicalRecord"> | string | null
   vetName?: Prisma.StringNullableFilter<"MedicalRecord"> | string | null
-  notes?: Prisma.StringFilter<"MedicalRecord"> | string
+  notes?: Prisma.StringNullableFilter<"MedicalRecord"> | string | null
   createdAt?: Prisma.DateTimeFilter<"MedicalRecord"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"MedicalRecord"> | Date | string
   pet?: Prisma.XOR<Prisma.PetScalarRelationFilter, Prisma.PetWhereInput>
@@ -257,7 +257,7 @@ export type MedicalRecordOrderByWithAggregationInput = {
   recordDate?: Prisma.SortOrder
   vetContactId?: Prisma.SortOrderInput | Prisma.SortOrder
   vetName?: Prisma.SortOrderInput | Prisma.SortOrder
-  notes?: Prisma.SortOrder
+  notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.MedicalRecordCountOrderByAggregateInput
@@ -274,7 +274,7 @@ export type MedicalRecordScalarWhereWithAggregatesInput = {
   recordDate?: Prisma.DateTimeWithAggregatesFilter<"MedicalRecord"> | Date | string
   vetContactId?: Prisma.StringNullableWithAggregatesFilter<"MedicalRecord"> | string | null
   vetName?: Prisma.StringNullableWithAggregatesFilter<"MedicalRecord"> | string | null
-  notes?: Prisma.StringWithAggregatesFilter<"MedicalRecord"> | string
+  notes?: Prisma.StringNullableWithAggregatesFilter<"MedicalRecord"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"MedicalRecord"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"MedicalRecord"> | Date | string
 }
@@ -283,7 +283,7 @@ export type MedicalRecordCreateInput = {
   id?: string
   recordDate: Date | string
   vetName?: string | null
-  notes: string
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   pet: Prisma.PetCreateNestedOneWithoutMedicalRecordsInput
@@ -300,7 +300,7 @@ export type MedicalRecordUncheckedCreateInput = {
   recordDate: Date | string
   vetContactId?: string | null
   vetName?: string | null
-  notes: string
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   treatments?: Prisma.TreatmentUncheckedCreateNestedManyWithoutMedicalRecordInput
@@ -313,7 +313,7 @@ export type MedicalRecordUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   recordDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vetName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pet?: Prisma.PetUpdateOneRequiredWithoutMedicalRecordsNestedInput
@@ -330,7 +330,7 @@ export type MedicalRecordUncheckedUpdateInput = {
   recordDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vetContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vetName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   treatments?: Prisma.TreatmentUncheckedUpdateManyWithoutMedicalRecordNestedInput
@@ -345,7 +345,7 @@ export type MedicalRecordCreateManyInput = {
   recordDate: Date | string
   vetContactId?: string | null
   vetName?: string | null
-  notes: string
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -354,7 +354,7 @@ export type MedicalRecordUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   recordDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vetName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -365,7 +365,7 @@ export type MedicalRecordUncheckedUpdateManyInput = {
   recordDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vetContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vetName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -570,7 +570,7 @@ export type MedicalRecordCreateWithoutPetInput = {
   id?: string
   recordDate: Date | string
   vetName?: string | null
-  notes: string
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   vet?: Prisma.EmergencyContactCreateNestedOneWithoutVetMedicalRecordsInput
@@ -585,7 +585,7 @@ export type MedicalRecordUncheckedCreateWithoutPetInput = {
   recordDate: Date | string
   vetContactId?: string | null
   vetName?: string | null
-  notes: string
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   treatments?: Prisma.TreatmentUncheckedCreateNestedManyWithoutMedicalRecordInput
@@ -629,7 +629,7 @@ export type MedicalRecordScalarWhereInput = {
   recordDate?: Prisma.DateTimeFilter<"MedicalRecord"> | Date | string
   vetContactId?: Prisma.StringNullableFilter<"MedicalRecord"> | string | null
   vetName?: Prisma.StringNullableFilter<"MedicalRecord"> | string | null
-  notes?: Prisma.StringFilter<"MedicalRecord"> | string
+  notes?: Prisma.StringNullableFilter<"MedicalRecord"> | string | null
   createdAt?: Prisma.DateTimeFilter<"MedicalRecord"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"MedicalRecord"> | Date | string
 }
@@ -638,7 +638,7 @@ export type MedicalRecordCreateWithoutVetInput = {
   id?: string
   recordDate: Date | string
   vetName?: string | null
-  notes: string
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   pet: Prisma.PetCreateNestedOneWithoutMedicalRecordsInput
@@ -653,7 +653,7 @@ export type MedicalRecordUncheckedCreateWithoutVetInput = {
   petId: string
   recordDate: Date | string
   vetName?: string | null
-  notes: string
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   treatments?: Prisma.TreatmentUncheckedCreateNestedManyWithoutMedicalRecordInput
@@ -692,7 +692,7 @@ export type MedicalRecordCreateWithoutTreatmentsInput = {
   id?: string
   recordDate: Date | string
   vetName?: string | null
-  notes: string
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   pet: Prisma.PetCreateNestedOneWithoutMedicalRecordsInput
@@ -708,7 +708,7 @@ export type MedicalRecordUncheckedCreateWithoutTreatmentsInput = {
   recordDate: Date | string
   vetContactId?: string | null
   vetName?: string | null
-  notes: string
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   immunizations?: Prisma.ImmunizationUncheckedCreateNestedManyWithoutMedicalRecordInput
@@ -736,7 +736,7 @@ export type MedicalRecordUpdateWithoutTreatmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   recordDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vetName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pet?: Prisma.PetUpdateOneRequiredWithoutMedicalRecordsNestedInput
@@ -752,7 +752,7 @@ export type MedicalRecordUncheckedUpdateWithoutTreatmentsInput = {
   recordDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vetContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vetName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   immunizations?: Prisma.ImmunizationUncheckedUpdateManyWithoutMedicalRecordNestedInput
@@ -764,7 +764,7 @@ export type MedicalRecordCreateWithoutImmunizationsInput = {
   id?: string
   recordDate: Date | string
   vetName?: string | null
-  notes: string
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   pet: Prisma.PetCreateNestedOneWithoutMedicalRecordsInput
@@ -780,7 +780,7 @@ export type MedicalRecordUncheckedCreateWithoutImmunizationsInput = {
   recordDate: Date | string
   vetContactId?: string | null
   vetName?: string | null
-  notes: string
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   treatments?: Prisma.TreatmentUncheckedCreateNestedManyWithoutMedicalRecordInput
@@ -808,7 +808,7 @@ export type MedicalRecordUpdateWithoutImmunizationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   recordDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vetName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pet?: Prisma.PetUpdateOneRequiredWithoutMedicalRecordsNestedInput
@@ -824,7 +824,7 @@ export type MedicalRecordUncheckedUpdateWithoutImmunizationsInput = {
   recordDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vetContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vetName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   treatments?: Prisma.TreatmentUncheckedUpdateManyWithoutMedicalRecordNestedInput
@@ -836,7 +836,7 @@ export type MedicalRecordCreateWithoutDiagnosticsInput = {
   id?: string
   recordDate: Date | string
   vetName?: string | null
-  notes: string
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   pet: Prisma.PetCreateNestedOneWithoutMedicalRecordsInput
@@ -852,7 +852,7 @@ export type MedicalRecordUncheckedCreateWithoutDiagnosticsInput = {
   recordDate: Date | string
   vetContactId?: string | null
   vetName?: string | null
-  notes: string
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   treatments?: Prisma.TreatmentUncheckedCreateNestedManyWithoutMedicalRecordInput
@@ -880,7 +880,7 @@ export type MedicalRecordUpdateWithoutDiagnosticsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   recordDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vetName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pet?: Prisma.PetUpdateOneRequiredWithoutMedicalRecordsNestedInput
@@ -896,7 +896,7 @@ export type MedicalRecordUncheckedUpdateWithoutDiagnosticsInput = {
   recordDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vetContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vetName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   treatments?: Prisma.TreatmentUncheckedUpdateManyWithoutMedicalRecordNestedInput
@@ -908,7 +908,7 @@ export type MedicalRecordCreateWithoutMedicationsInput = {
   id?: string
   recordDate: Date | string
   vetName?: string | null
-  notes: string
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   pet: Prisma.PetCreateNestedOneWithoutMedicalRecordsInput
@@ -924,7 +924,7 @@ export type MedicalRecordUncheckedCreateWithoutMedicationsInput = {
   recordDate: Date | string
   vetContactId?: string | null
   vetName?: string | null
-  notes: string
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   treatments?: Prisma.TreatmentUncheckedCreateNestedManyWithoutMedicalRecordInput
@@ -952,7 +952,7 @@ export type MedicalRecordUpdateWithoutMedicationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   recordDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vetName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pet?: Prisma.PetUpdateOneRequiredWithoutMedicalRecordsNestedInput
@@ -968,7 +968,7 @@ export type MedicalRecordUncheckedUpdateWithoutMedicationsInput = {
   recordDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vetContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vetName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   treatments?: Prisma.TreatmentUncheckedUpdateManyWithoutMedicalRecordNestedInput
@@ -981,7 +981,7 @@ export type MedicalRecordCreateManyPetInput = {
   recordDate: Date | string
   vetContactId?: string | null
   vetName?: string | null
-  notes: string
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -990,7 +990,7 @@ export type MedicalRecordUpdateWithoutPetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   recordDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vetName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vet?: Prisma.EmergencyContactUpdateOneWithoutVetMedicalRecordsNestedInput
@@ -1005,7 +1005,7 @@ export type MedicalRecordUncheckedUpdateWithoutPetInput = {
   recordDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vetContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vetName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   treatments?: Prisma.TreatmentUncheckedUpdateManyWithoutMedicalRecordNestedInput
@@ -1019,7 +1019,7 @@ export type MedicalRecordUncheckedUpdateManyWithoutPetInput = {
   recordDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vetContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vetName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1029,7 +1029,7 @@ export type MedicalRecordCreateManyVetInput = {
   petId: string
   recordDate: Date | string
   vetName?: string | null
-  notes: string
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1038,7 +1038,7 @@ export type MedicalRecordUpdateWithoutVetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   recordDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vetName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pet?: Prisma.PetUpdateOneRequiredWithoutMedicalRecordsNestedInput
@@ -1053,7 +1053,7 @@ export type MedicalRecordUncheckedUpdateWithoutVetInput = {
   petId?: Prisma.StringFieldUpdateOperationsInput | string
   recordDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vetName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   treatments?: Prisma.TreatmentUncheckedUpdateManyWithoutMedicalRecordNestedInput
@@ -1067,7 +1067,7 @@ export type MedicalRecordUncheckedUpdateManyWithoutVetInput = {
   petId?: Prisma.StringFieldUpdateOperationsInput | string
   recordDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vetName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1220,7 +1220,7 @@ export type $MedicalRecordPayload<ExtArgs extends runtime.Types.Extensions.Inter
     recordDate: Date
     vetContactId: string | null
     vetName: string | null
-    notes: string
+    notes: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["medicalRecord"]>

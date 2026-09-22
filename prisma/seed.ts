@@ -8,7 +8,37 @@ import {
     DiagnosticType } from "../src/generated/prisma/enums"
 import { prisma } from "./lib/prisma"
 
+const VACCINE_CATALOG = [
+    { name: 'Rabies', species: PetType.DOG, defaultIntervalMonths: 36 },
+    { name: 'Distemper', species: PetType.DOG, defaultIntervalMonths: 12 },
+    { name: 'Bordetella', species: PetType.DOG, defaultIntervalMonths: 12 },
+    { name: 'Leptospirosis', species: PetType.DOG, defaultIntervalMonths: 12 },
+    { name: 'Other', species: PetType.DOG, defaultIntervalMonths: null },
+    { name: 'Rabies', species: PetType.CAT, defaultIntervalMonths: 36 },
+    { name: 'FVRCP', species: PetType.CAT, defaultIntervalMonths: 12 },
+    { name: 'Feline Leukemia', species: PetType.CAT, defaultIntervalMonths: 12 },
+    { name: 'Other', species: PetType.CAT, defaultIntervalMonths: null },
+    { name: 'Polyomavirus', species: PetType.BIRD, defaultIntervalMonths: 12 },
+    { name: "Pacheco's Disease", species: PetType.BIRD, defaultIntervalMonths: 12 },
+    { name: 'Other', species: PetType.BIRD, defaultIntervalMonths: null },
+];
+
 async function main() {
+    for (const vaccine of VACCINE_CATALOG) {
+        await prisma.vaccine.upsert({
+            where: { name_species: { name: vaccine.name, species: vaccine.species } },
+            update: {},
+            create: vaccine,
+        });
+    }
+
+    const rabiesDog = await prisma.vaccine.findUniqueOrThrow({
+        where: { name_species: { name: 'Rabies', species: PetType.DOG } },
+    });
+    const fvrcpCat = await prisma.vaccine.findUniqueOrThrow({
+        where: { name_species: { name: 'FVRCP', species: PetType.CAT } },
+    });
+
     const owner1 = await prisma.petOwner.create({
         data: {
             firstName: "Jonathan",
@@ -75,8 +105,9 @@ async function main() {
                 create: [
                     {
                         petId: pet1.id,
-                        name: '',
+                        vaccineId: rabiesDog.id,
                         dateAdministered: new Date('2026-05-03'),
+                        nextDueDate: new Date('2029-05-03'),
                     }
                 ]
             },
@@ -131,8 +162,9 @@ async function main() {
                 create: [
                     {
                         petId: pet2.id,
-                        name: '',
-                        dateAdministered: new Date('2026-12-19')
+                        vaccineId: fvrcpCat.id,
+                        dateAdministered: new Date('2026-12-19'),
+                        nextDueDate: new Date('2027-12-19')
                     }
                 ]
             },

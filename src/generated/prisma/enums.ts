@@ -64,7 +64,8 @@ export type DosageUnit = (typeof DosageUnit)[keyof typeof DosageUnit]
 export const MedicationStatus = {
   ACTIVE: 'ACTIVE',
   COMPLETED: 'COMPLETED',
-  DISCONTINUED: 'DISCONTINUED'
+  DISCONTINUED: 'DISCONTINUED',
+  UNKNOWN: 'UNKNOWN'
 } as const
 
 export type MedicationStatus = (typeof MedicationStatus)[keyof typeof MedicationStatus]

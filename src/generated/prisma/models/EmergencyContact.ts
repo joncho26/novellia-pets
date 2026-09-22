@@ -231,6 +231,7 @@ export type EmergencyContactWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"EmergencyContact"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"EmergencyContact"> | Date | string
   petOwner?: Prisma.XOR<Prisma.PetOwnerScalarRelationFilter, Prisma.PetOwnerWhereInput>
+  pet?: Prisma.XOR<Prisma.PetNullableScalarRelationFilter, Prisma.PetWhereInput> | null
   vetMedicalRecords?: Prisma.MedicalRecordListRelationFilter
 }
 
@@ -247,6 +248,7 @@ export type EmergencyContactOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   petOwner?: Prisma.PetOwnerOrderByWithRelationInput
+  pet?: Prisma.PetOrderByWithRelationInput
   vetMedicalRecords?: Prisma.MedicalRecordOrderByRelationAggregateInput
 }
 
@@ -266,6 +268,7 @@ export type EmergencyContactWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"EmergencyContact"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"EmergencyContact"> | Date | string
   petOwner?: Prisma.XOR<Prisma.PetOwnerScalarRelationFilter, Prisma.PetOwnerWhereInput>
+  pet?: Prisma.XOR<Prisma.PetNullableScalarRelationFilter, Prisma.PetWhereInput> | null
   vetMedicalRecords?: Prisma.MedicalRecordListRelationFilter
 }, "id">
 
@@ -305,7 +308,6 @@ export type EmergencyContactScalarWhereWithAggregatesInput = {
 
 export type EmergencyContactCreateInput = {
   id?: string
-  petId?: string | null
   firstName: string
   lastName: string
   relationship: $Enums.ContactRelation
@@ -315,6 +317,7 @@ export type EmergencyContactCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   petOwner: Prisma.PetOwnerCreateNestedOneWithoutEmergencyContactsInput
+  pet?: Prisma.PetCreateNestedOneWithoutEmergencyContactsInput
   vetMedicalRecords?: Prisma.MedicalRecordCreateNestedManyWithoutVetInput
 }
 
@@ -335,7 +338,6 @@ export type EmergencyContactUncheckedCreateInput = {
 
 export type EmergencyContactUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  petId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   relationship?: Prisma.EnumContactRelationFieldUpdateOperationsInput | $Enums.ContactRelation
@@ -345,6 +347,7 @@ export type EmergencyContactUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   petOwner?: Prisma.PetOwnerUpdateOneRequiredWithoutEmergencyContactsNestedInput
+  pet?: Prisma.PetUpdateOneWithoutEmergencyContactsNestedInput
   vetMedicalRecords?: Prisma.MedicalRecordUpdateManyWithoutVetNestedInput
 }
 
@@ -379,7 +382,6 @@ export type EmergencyContactCreateManyInput = {
 
 export type EmergencyContactUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  petId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   relationship?: Prisma.EnumContactRelationFieldUpdateOperationsInput | $Enums.ContactRelation
@@ -461,6 +463,48 @@ export type EmergencyContactNullableScalarRelationFilter = {
   isNot?: Prisma.EmergencyContactWhereInput | null
 }
 
+export type EmergencyContactCreateNestedManyWithoutPetInput = {
+  create?: Prisma.XOR<Prisma.EmergencyContactCreateWithoutPetInput, Prisma.EmergencyContactUncheckedCreateWithoutPetInput> | Prisma.EmergencyContactCreateWithoutPetInput[] | Prisma.EmergencyContactUncheckedCreateWithoutPetInput[]
+  connectOrCreate?: Prisma.EmergencyContactCreateOrConnectWithoutPetInput | Prisma.EmergencyContactCreateOrConnectWithoutPetInput[]
+  createMany?: Prisma.EmergencyContactCreateManyPetInputEnvelope
+  connect?: Prisma.EmergencyContactWhereUniqueInput | Prisma.EmergencyContactWhereUniqueInput[]
+}
+
+export type EmergencyContactUncheckedCreateNestedManyWithoutPetInput = {
+  create?: Prisma.XOR<Prisma.EmergencyContactCreateWithoutPetInput, Prisma.EmergencyContactUncheckedCreateWithoutPetInput> | Prisma.EmergencyContactCreateWithoutPetInput[] | Prisma.EmergencyContactUncheckedCreateWithoutPetInput[]
+  connectOrCreate?: Prisma.EmergencyContactCreateOrConnectWithoutPetInput | Prisma.EmergencyContactCreateOrConnectWithoutPetInput[]
+  createMany?: Prisma.EmergencyContactCreateManyPetInputEnvelope
+  connect?: Prisma.EmergencyContactWhereUniqueInput | Prisma.EmergencyContactWhereUniqueInput[]
+}
+
+export type EmergencyContactUpdateManyWithoutPetNestedInput = {
+  create?: Prisma.XOR<Prisma.EmergencyContactCreateWithoutPetInput, Prisma.EmergencyContactUncheckedCreateWithoutPetInput> | Prisma.EmergencyContactCreateWithoutPetInput[] | Prisma.EmergencyContactUncheckedCreateWithoutPetInput[]
+  connectOrCreate?: Prisma.EmergencyContactCreateOrConnectWithoutPetInput | Prisma.EmergencyContactCreateOrConnectWithoutPetInput[]
+  upsert?: Prisma.EmergencyContactUpsertWithWhereUniqueWithoutPetInput | Prisma.EmergencyContactUpsertWithWhereUniqueWithoutPetInput[]
+  createMany?: Prisma.EmergencyContactCreateManyPetInputEnvelope
+  set?: Prisma.EmergencyContactWhereUniqueInput | Prisma.EmergencyContactWhereUniqueInput[]
+  disconnect?: Prisma.EmergencyContactWhereUniqueInput | Prisma.EmergencyContactWhereUniqueInput[]
+  delete?: Prisma.EmergencyContactWhereUniqueInput | Prisma.EmergencyContactWhereUniqueInput[]
+  connect?: Prisma.EmergencyContactWhereUniqueInput | Prisma.EmergencyContactWhereUniqueInput[]
+  update?: Prisma.EmergencyContactUpdateWithWhereUniqueWithoutPetInput | Prisma.EmergencyContactUpdateWithWhereUniqueWithoutPetInput[]
+  updateMany?: Prisma.EmergencyContactUpdateManyWithWhereWithoutPetInput | Prisma.EmergencyContactUpdateManyWithWhereWithoutPetInput[]
+  deleteMany?: Prisma.EmergencyContactScalarWhereInput | Prisma.EmergencyContactScalarWhereInput[]
+}
+
+export type EmergencyContactUncheckedUpdateManyWithoutPetNestedInput = {
+  create?: Prisma.XOR<Prisma.EmergencyContactCreateWithoutPetInput, Prisma.EmergencyContactUncheckedCreateWithoutPetInput> | Prisma.EmergencyContactCreateWithoutPetInput[] | Prisma.EmergencyContactUncheckedCreateWithoutPetInput[]
+  connectOrCreate?: Prisma.EmergencyContactCreateOrConnectWithoutPetInput | Prisma.EmergencyContactCreateOrConnectWithoutPetInput[]
+  upsert?: Prisma.EmergencyContactUpsertWithWhereUniqueWithoutPetInput | Prisma.EmergencyContactUpsertWithWhereUniqueWithoutPetInput[]
+  createMany?: Prisma.EmergencyContactCreateManyPetInputEnvelope
+  set?: Prisma.EmergencyContactWhereUniqueInput | Prisma.EmergencyContactWhereUniqueInput[]
+  disconnect?: Prisma.EmergencyContactWhereUniqueInput | Prisma.EmergencyContactWhereUniqueInput[]
+  delete?: Prisma.EmergencyContactWhereUniqueInput | Prisma.EmergencyContactWhereUniqueInput[]
+  connect?: Prisma.EmergencyContactWhereUniqueInput | Prisma.EmergencyContactWhereUniqueInput[]
+  update?: Prisma.EmergencyContactUpdateWithWhereUniqueWithoutPetInput | Prisma.EmergencyContactUpdateWithWhereUniqueWithoutPetInput[]
+  updateMany?: Prisma.EmergencyContactUpdateManyWithWhereWithoutPetInput | Prisma.EmergencyContactUpdateManyWithWhereWithoutPetInput[]
+  deleteMany?: Prisma.EmergencyContactScalarWhereInput | Prisma.EmergencyContactScalarWhereInput[]
+}
+
 export type EmergencyContactCreateNestedManyWithoutPetOwnerInput = {
   create?: Prisma.XOR<Prisma.EmergencyContactCreateWithoutPetOwnerInput, Prisma.EmergencyContactUncheckedCreateWithoutPetOwnerInput> | Prisma.EmergencyContactCreateWithoutPetOwnerInput[] | Prisma.EmergencyContactUncheckedCreateWithoutPetOwnerInput[]
   connectOrCreate?: Prisma.EmergencyContactCreateOrConnectWithoutPetOwnerInput | Prisma.EmergencyContactCreateOrConnectWithoutPetOwnerInput[]
@@ -527,9 +571,8 @@ export type EmergencyContactUpdateOneWithoutVetMedicalRecordsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.EmergencyContactUpdateToOneWithWhereWithoutVetMedicalRecordsInput, Prisma.EmergencyContactUpdateWithoutVetMedicalRecordsInput>, Prisma.EmergencyContactUncheckedUpdateWithoutVetMedicalRecordsInput>
 }
 
-export type EmergencyContactCreateWithoutPetOwnerInput = {
+export type EmergencyContactCreateWithoutPetInput = {
   id?: string
-  petId?: string | null
   firstName: string
   lastName: string
   relationship: $Enums.ContactRelation
@@ -538,6 +581,78 @@ export type EmergencyContactCreateWithoutPetOwnerInput = {
   isPrimary: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  petOwner: Prisma.PetOwnerCreateNestedOneWithoutEmergencyContactsInput
+  vetMedicalRecords?: Prisma.MedicalRecordCreateNestedManyWithoutVetInput
+}
+
+export type EmergencyContactUncheckedCreateWithoutPetInput = {
+  id?: string
+  petOwnerId: string
+  firstName: string
+  lastName: string
+  relationship: $Enums.ContactRelation
+  email: string
+  phone: string
+  isPrimary: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  vetMedicalRecords?: Prisma.MedicalRecordUncheckedCreateNestedManyWithoutVetInput
+}
+
+export type EmergencyContactCreateOrConnectWithoutPetInput = {
+  where: Prisma.EmergencyContactWhereUniqueInput
+  create: Prisma.XOR<Prisma.EmergencyContactCreateWithoutPetInput, Prisma.EmergencyContactUncheckedCreateWithoutPetInput>
+}
+
+export type EmergencyContactCreateManyPetInputEnvelope = {
+  data: Prisma.EmergencyContactCreateManyPetInput | Prisma.EmergencyContactCreateManyPetInput[]
+  skipDuplicates?: boolean
+}
+
+export type EmergencyContactUpsertWithWhereUniqueWithoutPetInput = {
+  where: Prisma.EmergencyContactWhereUniqueInput
+  update: Prisma.XOR<Prisma.EmergencyContactUpdateWithoutPetInput, Prisma.EmergencyContactUncheckedUpdateWithoutPetInput>
+  create: Prisma.XOR<Prisma.EmergencyContactCreateWithoutPetInput, Prisma.EmergencyContactUncheckedCreateWithoutPetInput>
+}
+
+export type EmergencyContactUpdateWithWhereUniqueWithoutPetInput = {
+  where: Prisma.EmergencyContactWhereUniqueInput
+  data: Prisma.XOR<Prisma.EmergencyContactUpdateWithoutPetInput, Prisma.EmergencyContactUncheckedUpdateWithoutPetInput>
+}
+
+export type EmergencyContactUpdateManyWithWhereWithoutPetInput = {
+  where: Prisma.EmergencyContactScalarWhereInput
+  data: Prisma.XOR<Prisma.EmergencyContactUpdateManyMutationInput, Prisma.EmergencyContactUncheckedUpdateManyWithoutPetInput>
+}
+
+export type EmergencyContactScalarWhereInput = {
+  AND?: Prisma.EmergencyContactScalarWhereInput | Prisma.EmergencyContactScalarWhereInput[]
+  OR?: Prisma.EmergencyContactScalarWhereInput[]
+  NOT?: Prisma.EmergencyContactScalarWhereInput | Prisma.EmergencyContactScalarWhereInput[]
+  id?: Prisma.StringFilter<"EmergencyContact"> | string
+  petOwnerId?: Prisma.StringFilter<"EmergencyContact"> | string
+  petId?: Prisma.StringNullableFilter<"EmergencyContact"> | string | null
+  firstName?: Prisma.StringFilter<"EmergencyContact"> | string
+  lastName?: Prisma.StringFilter<"EmergencyContact"> | string
+  relationship?: Prisma.EnumContactRelationFilter<"EmergencyContact"> | $Enums.ContactRelation
+  email?: Prisma.StringFilter<"EmergencyContact"> | string
+  phone?: Prisma.StringFilter<"EmergencyContact"> | string
+  isPrimary?: Prisma.BoolFilter<"EmergencyContact"> | boolean
+  createdAt?: Prisma.DateTimeFilter<"EmergencyContact"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"EmergencyContact"> | Date | string
+}
+
+export type EmergencyContactCreateWithoutPetOwnerInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  relationship: $Enums.ContactRelation
+  email: string
+  phone: string
+  isPrimary: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  pet?: Prisma.PetCreateNestedOneWithoutEmergencyContactsInput
   vetMedicalRecords?: Prisma.MedicalRecordCreateNestedManyWithoutVetInput
 }
 
@@ -581,26 +696,8 @@ export type EmergencyContactUpdateManyWithWhereWithoutPetOwnerInput = {
   data: Prisma.XOR<Prisma.EmergencyContactUpdateManyMutationInput, Prisma.EmergencyContactUncheckedUpdateManyWithoutPetOwnerInput>
 }
 
-export type EmergencyContactScalarWhereInput = {
-  AND?: Prisma.EmergencyContactScalarWhereInput | Prisma.EmergencyContactScalarWhereInput[]
-  OR?: Prisma.EmergencyContactScalarWhereInput[]
-  NOT?: Prisma.EmergencyContactScalarWhereInput | Prisma.EmergencyContactScalarWhereInput[]
-  id?: Prisma.StringFilter<"EmergencyContact"> | string
-  petOwnerId?: Prisma.StringFilter<"EmergencyContact"> | string
-  petId?: Prisma.StringNullableFilter<"EmergencyContact"> | string | null
-  firstName?: Prisma.StringFilter<"EmergencyContact"> | string
-  lastName?: Prisma.StringFilter<"EmergencyContact"> | string
-  relationship?: Prisma.EnumContactRelationFilter<"EmergencyContact"> | $Enums.ContactRelation
-  email?: Prisma.StringFilter<"EmergencyContact"> | string
-  phone?: Prisma.StringFilter<"EmergencyContact"> | string
-  isPrimary?: Prisma.BoolFilter<"EmergencyContact"> | boolean
-  createdAt?: Prisma.DateTimeFilter<"EmergencyContact"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"EmergencyContact"> | Date | string
-}
-
 export type EmergencyContactCreateWithoutVetMedicalRecordsInput = {
   id?: string
-  petId?: string | null
   firstName: string
   lastName: string
   relationship: $Enums.ContactRelation
@@ -610,6 +707,7 @@ export type EmergencyContactCreateWithoutVetMedicalRecordsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   petOwner: Prisma.PetOwnerCreateNestedOneWithoutEmergencyContactsInput
+  pet?: Prisma.PetCreateNestedOneWithoutEmergencyContactsInput
 }
 
 export type EmergencyContactUncheckedCreateWithoutVetMedicalRecordsInput = {
@@ -644,7 +742,6 @@ export type EmergencyContactUpdateToOneWithWhereWithoutVetMedicalRecordsInput = 
 
 export type EmergencyContactUpdateWithoutVetMedicalRecordsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  petId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   relationship?: Prisma.EnumContactRelationFieldUpdateOperationsInput | $Enums.ContactRelation
@@ -654,12 +751,67 @@ export type EmergencyContactUpdateWithoutVetMedicalRecordsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   petOwner?: Prisma.PetOwnerUpdateOneRequiredWithoutEmergencyContactsNestedInput
+  pet?: Prisma.PetUpdateOneWithoutEmergencyContactsNestedInput
 }
 
 export type EmergencyContactUncheckedUpdateWithoutVetMedicalRecordsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   petOwnerId?: Prisma.StringFieldUpdateOperationsInput | string
   petId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  relationship?: Prisma.EnumContactRelationFieldUpdateOperationsInput | $Enums.ContactRelation
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isPrimary?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type EmergencyContactCreateManyPetInput = {
+  id?: string
+  petOwnerId: string
+  firstName: string
+  lastName: string
+  relationship: $Enums.ContactRelation
+  email: string
+  phone: string
+  isPrimary: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type EmergencyContactUpdateWithoutPetInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  relationship?: Prisma.EnumContactRelationFieldUpdateOperationsInput | $Enums.ContactRelation
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isPrimary?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  petOwner?: Prisma.PetOwnerUpdateOneRequiredWithoutEmergencyContactsNestedInput
+  vetMedicalRecords?: Prisma.MedicalRecordUpdateManyWithoutVetNestedInput
+}
+
+export type EmergencyContactUncheckedUpdateWithoutPetInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  petOwnerId?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  relationship?: Prisma.EnumContactRelationFieldUpdateOperationsInput | $Enums.ContactRelation
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isPrimary?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  vetMedicalRecords?: Prisma.MedicalRecordUncheckedUpdateManyWithoutVetNestedInput
+}
+
+export type EmergencyContactUncheckedUpdateManyWithoutPetInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  petOwnerId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   relationship?: Prisma.EnumContactRelationFieldUpdateOperationsInput | $Enums.ContactRelation
@@ -685,7 +837,6 @@ export type EmergencyContactCreateManyPetOwnerInput = {
 
 export type EmergencyContactUpdateWithoutPetOwnerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  petId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   relationship?: Prisma.EnumContactRelationFieldUpdateOperationsInput | $Enums.ContactRelation
@@ -694,6 +845,7 @@ export type EmergencyContactUpdateWithoutPetOwnerInput = {
   isPrimary?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pet?: Prisma.PetUpdateOneWithoutEmergencyContactsNestedInput
   vetMedicalRecords?: Prisma.MedicalRecordUpdateManyWithoutVetNestedInput
 }
 
@@ -768,6 +920,7 @@ export type EmergencyContactSelect<ExtArgs extends runtime.Types.Extensions.Inte
   createdAt?: boolean
   updatedAt?: boolean
   petOwner?: boolean | Prisma.PetOwnerDefaultArgs<ExtArgs>
+  pet?: boolean | Prisma.EmergencyContact$petArgs<ExtArgs>
   vetMedicalRecords?: boolean | Prisma.EmergencyContact$vetMedicalRecordsArgs<ExtArgs>
   _count?: boolean | Prisma.EmergencyContactCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["emergencyContact"]>
@@ -785,6 +938,7 @@ export type EmergencyContactSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   createdAt?: boolean
   updatedAt?: boolean
   petOwner?: boolean | Prisma.PetOwnerDefaultArgs<ExtArgs>
+  pet?: boolean | Prisma.EmergencyContact$petArgs<ExtArgs>
 }, ExtArgs["result"]["emergencyContact"]>
 
 export type EmergencyContactSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -800,6 +954,7 @@ export type EmergencyContactSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   createdAt?: boolean
   updatedAt?: boolean
   petOwner?: boolean | Prisma.PetOwnerDefaultArgs<ExtArgs>
+  pet?: boolean | Prisma.EmergencyContact$petArgs<ExtArgs>
 }, ExtArgs["result"]["emergencyContact"]>
 
 export type EmergencyContactSelectScalar = {
@@ -819,20 +974,24 @@ export type EmergencyContactSelectScalar = {
 export type EmergencyContactOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "petOwnerId" | "petId" | "firstName" | "lastName" | "relationship" | "email" | "phone" | "isPrimary" | "createdAt" | "updatedAt", ExtArgs["result"]["emergencyContact"]>
 export type EmergencyContactInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   petOwner?: boolean | Prisma.PetOwnerDefaultArgs<ExtArgs>
+  pet?: boolean | Prisma.EmergencyContact$petArgs<ExtArgs>
   vetMedicalRecords?: boolean | Prisma.EmergencyContact$vetMedicalRecordsArgs<ExtArgs>
   _count?: boolean | Prisma.EmergencyContactCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type EmergencyContactIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   petOwner?: boolean | Prisma.PetOwnerDefaultArgs<ExtArgs>
+  pet?: boolean | Prisma.EmergencyContact$petArgs<ExtArgs>
 }
 export type EmergencyContactIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   petOwner?: boolean | Prisma.PetOwnerDefaultArgs<ExtArgs>
+  pet?: boolean | Prisma.EmergencyContact$petArgs<ExtArgs>
 }
 
 export type $EmergencyContactPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "EmergencyContact"
   objects: {
     petOwner: Prisma.$PetOwnerPayload<ExtArgs>
+    pet: Prisma.$PetPayload<ExtArgs> | null
     vetMedicalRecords: Prisma.$MedicalRecordPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1242,6 +1401,7 @@ readonly fields: EmergencyContactFieldRefs;
 export interface Prisma__EmergencyContactClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   petOwner<T extends Prisma.PetOwnerDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PetOwnerDefaultArgs<ExtArgs>>): Prisma.Prisma__PetOwnerClient<runtime.Types.Result.GetResult<Prisma.$PetOwnerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  pet<T extends Prisma.EmergencyContact$petArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmergencyContact$petArgs<ExtArgs>>): Prisma.Prisma__PetClient<runtime.Types.Result.GetResult<Prisma.$PetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   vetMedicalRecords<T extends Prisma.EmergencyContact$vetMedicalRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmergencyContact$vetMedicalRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MedicalRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1681,6 +1841,25 @@ export type EmergencyContactDeleteManyArgs<ExtArgs extends runtime.Types.Extensi
    * Limit how many EmergencyContacts to delete.
    */
   limit?: number
+}
+
+/**
+ * EmergencyContact.pet
+ */
+export type EmergencyContact$petArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Pet
+   */
+  select?: Prisma.PetSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Pet
+   */
+  omit?: Prisma.PetOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PetInclude<ExtArgs> | null
+  where?: Prisma.PetWhereInput
 }
 
 /**

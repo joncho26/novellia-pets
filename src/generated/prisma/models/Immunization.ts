@@ -28,7 +28,7 @@ export type ImmunizationMinAggregateOutputType = {
   id: string | null
   petId: string | null
   medicalRecordId: string | null
-  name: string | null
+  vaccineId: string | null
   dateAdministered: Date | null
   nextDueDate: Date | null
   createdAt: Date | null
@@ -39,7 +39,7 @@ export type ImmunizationMaxAggregateOutputType = {
   id: string | null
   petId: string | null
   medicalRecordId: string | null
-  name: string | null
+  vaccineId: string | null
   dateAdministered: Date | null
   nextDueDate: Date | null
   createdAt: Date | null
@@ -50,7 +50,7 @@ export type ImmunizationCountAggregateOutputType = {
   id: number
   petId: number
   medicalRecordId: number
-  name: number
+  vaccineId: number
   dateAdministered: number
   nextDueDate: number
   createdAt: number
@@ -63,7 +63,7 @@ export type ImmunizationMinAggregateInputType = {
   id?: true
   petId?: true
   medicalRecordId?: true
-  name?: true
+  vaccineId?: true
   dateAdministered?: true
   nextDueDate?: true
   createdAt?: true
@@ -74,7 +74,7 @@ export type ImmunizationMaxAggregateInputType = {
   id?: true
   petId?: true
   medicalRecordId?: true
-  name?: true
+  vaccineId?: true
   dateAdministered?: true
   nextDueDate?: true
   createdAt?: true
@@ -85,7 +85,7 @@ export type ImmunizationCountAggregateInputType = {
   id?: true
   petId?: true
   medicalRecordId?: true
-  name?: true
+  vaccineId?: true
   dateAdministered?: true
   nextDueDate?: true
   createdAt?: true
@@ -169,7 +169,7 @@ export type ImmunizationGroupByOutputType = {
   id: string
   petId: string
   medicalRecordId: string | null
-  name: string
+  vaccineId: string
   dateAdministered: Date
   nextDueDate: Date | null
   createdAt: Date
@@ -201,26 +201,28 @@ export type ImmunizationWhereInput = {
   id?: Prisma.StringFilter<"Immunization"> | string
   petId?: Prisma.StringFilter<"Immunization"> | string
   medicalRecordId?: Prisma.StringNullableFilter<"Immunization"> | string | null
-  name?: Prisma.StringFilter<"Immunization"> | string
+  vaccineId?: Prisma.StringFilter<"Immunization"> | string
   dateAdministered?: Prisma.DateTimeFilter<"Immunization"> | Date | string
   nextDueDate?: Prisma.DateTimeNullableFilter<"Immunization"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Immunization"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Immunization"> | Date | string
   pet?: Prisma.XOR<Prisma.PetScalarRelationFilter, Prisma.PetWhereInput>
   medicalRecord?: Prisma.XOR<Prisma.MedicalRecordNullableScalarRelationFilter, Prisma.MedicalRecordWhereInput> | null
+  vaccine?: Prisma.XOR<Prisma.VaccineScalarRelationFilter, Prisma.VaccineWhereInput>
 }
 
 export type ImmunizationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   petId?: Prisma.SortOrder
   medicalRecordId?: Prisma.SortOrderInput | Prisma.SortOrder
-  name?: Prisma.SortOrder
+  vaccineId?: Prisma.SortOrder
   dateAdministered?: Prisma.SortOrder
   nextDueDate?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   pet?: Prisma.PetOrderByWithRelationInput
   medicalRecord?: Prisma.MedicalRecordOrderByWithRelationInput
+  vaccine?: Prisma.VaccineOrderByWithRelationInput
 }
 
 export type ImmunizationWhereUniqueInput = Prisma.AtLeast<{
@@ -230,20 +232,21 @@ export type ImmunizationWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ImmunizationWhereInput | Prisma.ImmunizationWhereInput[]
   petId?: Prisma.StringFilter<"Immunization"> | string
   medicalRecordId?: Prisma.StringNullableFilter<"Immunization"> | string | null
-  name?: Prisma.StringFilter<"Immunization"> | string
+  vaccineId?: Prisma.StringFilter<"Immunization"> | string
   dateAdministered?: Prisma.DateTimeFilter<"Immunization"> | Date | string
   nextDueDate?: Prisma.DateTimeNullableFilter<"Immunization"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Immunization"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Immunization"> | Date | string
   pet?: Prisma.XOR<Prisma.PetScalarRelationFilter, Prisma.PetWhereInput>
   medicalRecord?: Prisma.XOR<Prisma.MedicalRecordNullableScalarRelationFilter, Prisma.MedicalRecordWhereInput> | null
+  vaccine?: Prisma.XOR<Prisma.VaccineScalarRelationFilter, Prisma.VaccineWhereInput>
 }, "id">
 
 export type ImmunizationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   petId?: Prisma.SortOrder
   medicalRecordId?: Prisma.SortOrderInput | Prisma.SortOrder
-  name?: Prisma.SortOrder
+  vaccineId?: Prisma.SortOrder
   dateAdministered?: Prisma.SortOrder
   nextDueDate?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -260,7 +263,7 @@ export type ImmunizationScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Immunization"> | string
   petId?: Prisma.StringWithAggregatesFilter<"Immunization"> | string
   medicalRecordId?: Prisma.StringNullableWithAggregatesFilter<"Immunization"> | string | null
-  name?: Prisma.StringWithAggregatesFilter<"Immunization"> | string
+  vaccineId?: Prisma.StringWithAggregatesFilter<"Immunization"> | string
   dateAdministered?: Prisma.DateTimeWithAggregatesFilter<"Immunization"> | Date | string
   nextDueDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Immunization"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Immunization"> | Date | string
@@ -269,20 +272,20 @@ export type ImmunizationScalarWhereWithAggregatesInput = {
 
 export type ImmunizationCreateInput = {
   id?: string
-  name: string
   dateAdministered: Date | string
   nextDueDate?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   pet: Prisma.PetCreateNestedOneWithoutImmunizationsInput
   medicalRecord?: Prisma.MedicalRecordCreateNestedOneWithoutImmunizationsInput
+  vaccine: Prisma.VaccineCreateNestedOneWithoutImmunizationsInput
 }
 
 export type ImmunizationUncheckedCreateInput = {
   id?: string
   petId: string
   medicalRecordId?: string | null
-  name: string
+  vaccineId: string
   dateAdministered: Date | string
   nextDueDate?: Date | string | null
   createdAt?: Date | string
@@ -291,20 +294,20 @@ export type ImmunizationUncheckedCreateInput = {
 
 export type ImmunizationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   dateAdministered?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   nextDueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pet?: Prisma.PetUpdateOneRequiredWithoutImmunizationsNestedInput
   medicalRecord?: Prisma.MedicalRecordUpdateOneWithoutImmunizationsNestedInput
+  vaccine?: Prisma.VaccineUpdateOneRequiredWithoutImmunizationsNestedInput
 }
 
 export type ImmunizationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   petId?: Prisma.StringFieldUpdateOperationsInput | string
   medicalRecordId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  vaccineId?: Prisma.StringFieldUpdateOperationsInput | string
   dateAdministered?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   nextDueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -315,7 +318,7 @@ export type ImmunizationCreateManyInput = {
   id?: string
   petId: string
   medicalRecordId?: string | null
-  name: string
+  vaccineId: string
   dateAdministered: Date | string
   nextDueDate?: Date | string | null
   createdAt?: Date | string
@@ -324,7 +327,6 @@ export type ImmunizationCreateManyInput = {
 
 export type ImmunizationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   dateAdministered?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   nextDueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -335,7 +337,7 @@ export type ImmunizationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   petId?: Prisma.StringFieldUpdateOperationsInput | string
   medicalRecordId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  vaccineId?: Prisma.StringFieldUpdateOperationsInput | string
   dateAdministered?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   nextDueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -356,7 +358,7 @@ export type ImmunizationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   petId?: Prisma.SortOrder
   medicalRecordId?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  vaccineId?: Prisma.SortOrder
   dateAdministered?: Prisma.SortOrder
   nextDueDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -367,7 +369,7 @@ export type ImmunizationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   petId?: Prisma.SortOrder
   medicalRecordId?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  vaccineId?: Prisma.SortOrder
   dateAdministered?: Prisma.SortOrder
   nextDueDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -378,7 +380,7 @@ export type ImmunizationMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   petId?: Prisma.SortOrder
   medicalRecordId?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  vaccineId?: Prisma.SortOrder
   dateAdministered?: Prisma.SortOrder
   nextDueDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -469,20 +471,62 @@ export type ImmunizationUncheckedUpdateManyWithoutMedicalRecordNestedInput = {
   deleteMany?: Prisma.ImmunizationScalarWhereInput | Prisma.ImmunizationScalarWhereInput[]
 }
 
+export type ImmunizationCreateNestedManyWithoutVaccineInput = {
+  create?: Prisma.XOR<Prisma.ImmunizationCreateWithoutVaccineInput, Prisma.ImmunizationUncheckedCreateWithoutVaccineInput> | Prisma.ImmunizationCreateWithoutVaccineInput[] | Prisma.ImmunizationUncheckedCreateWithoutVaccineInput[]
+  connectOrCreate?: Prisma.ImmunizationCreateOrConnectWithoutVaccineInput | Prisma.ImmunizationCreateOrConnectWithoutVaccineInput[]
+  createMany?: Prisma.ImmunizationCreateManyVaccineInputEnvelope
+  connect?: Prisma.ImmunizationWhereUniqueInput | Prisma.ImmunizationWhereUniqueInput[]
+}
+
+export type ImmunizationUncheckedCreateNestedManyWithoutVaccineInput = {
+  create?: Prisma.XOR<Prisma.ImmunizationCreateWithoutVaccineInput, Prisma.ImmunizationUncheckedCreateWithoutVaccineInput> | Prisma.ImmunizationCreateWithoutVaccineInput[] | Prisma.ImmunizationUncheckedCreateWithoutVaccineInput[]
+  connectOrCreate?: Prisma.ImmunizationCreateOrConnectWithoutVaccineInput | Prisma.ImmunizationCreateOrConnectWithoutVaccineInput[]
+  createMany?: Prisma.ImmunizationCreateManyVaccineInputEnvelope
+  connect?: Prisma.ImmunizationWhereUniqueInput | Prisma.ImmunizationWhereUniqueInput[]
+}
+
+export type ImmunizationUpdateManyWithoutVaccineNestedInput = {
+  create?: Prisma.XOR<Prisma.ImmunizationCreateWithoutVaccineInput, Prisma.ImmunizationUncheckedCreateWithoutVaccineInput> | Prisma.ImmunizationCreateWithoutVaccineInput[] | Prisma.ImmunizationUncheckedCreateWithoutVaccineInput[]
+  connectOrCreate?: Prisma.ImmunizationCreateOrConnectWithoutVaccineInput | Prisma.ImmunizationCreateOrConnectWithoutVaccineInput[]
+  upsert?: Prisma.ImmunizationUpsertWithWhereUniqueWithoutVaccineInput | Prisma.ImmunizationUpsertWithWhereUniqueWithoutVaccineInput[]
+  createMany?: Prisma.ImmunizationCreateManyVaccineInputEnvelope
+  set?: Prisma.ImmunizationWhereUniqueInput | Prisma.ImmunizationWhereUniqueInput[]
+  disconnect?: Prisma.ImmunizationWhereUniqueInput | Prisma.ImmunizationWhereUniqueInput[]
+  delete?: Prisma.ImmunizationWhereUniqueInput | Prisma.ImmunizationWhereUniqueInput[]
+  connect?: Prisma.ImmunizationWhereUniqueInput | Prisma.ImmunizationWhereUniqueInput[]
+  update?: Prisma.ImmunizationUpdateWithWhereUniqueWithoutVaccineInput | Prisma.ImmunizationUpdateWithWhereUniqueWithoutVaccineInput[]
+  updateMany?: Prisma.ImmunizationUpdateManyWithWhereWithoutVaccineInput | Prisma.ImmunizationUpdateManyWithWhereWithoutVaccineInput[]
+  deleteMany?: Prisma.ImmunizationScalarWhereInput | Prisma.ImmunizationScalarWhereInput[]
+}
+
+export type ImmunizationUncheckedUpdateManyWithoutVaccineNestedInput = {
+  create?: Prisma.XOR<Prisma.ImmunizationCreateWithoutVaccineInput, Prisma.ImmunizationUncheckedCreateWithoutVaccineInput> | Prisma.ImmunizationCreateWithoutVaccineInput[] | Prisma.ImmunizationUncheckedCreateWithoutVaccineInput[]
+  connectOrCreate?: Prisma.ImmunizationCreateOrConnectWithoutVaccineInput | Prisma.ImmunizationCreateOrConnectWithoutVaccineInput[]
+  upsert?: Prisma.ImmunizationUpsertWithWhereUniqueWithoutVaccineInput | Prisma.ImmunizationUpsertWithWhereUniqueWithoutVaccineInput[]
+  createMany?: Prisma.ImmunizationCreateManyVaccineInputEnvelope
+  set?: Prisma.ImmunizationWhereUniqueInput | Prisma.ImmunizationWhereUniqueInput[]
+  disconnect?: Prisma.ImmunizationWhereUniqueInput | Prisma.ImmunizationWhereUniqueInput[]
+  delete?: Prisma.ImmunizationWhereUniqueInput | Prisma.ImmunizationWhereUniqueInput[]
+  connect?: Prisma.ImmunizationWhereUniqueInput | Prisma.ImmunizationWhereUniqueInput[]
+  update?: Prisma.ImmunizationUpdateWithWhereUniqueWithoutVaccineInput | Prisma.ImmunizationUpdateWithWhereUniqueWithoutVaccineInput[]
+  updateMany?: Prisma.ImmunizationUpdateManyWithWhereWithoutVaccineInput | Prisma.ImmunizationUpdateManyWithWhereWithoutVaccineInput[]
+  deleteMany?: Prisma.ImmunizationScalarWhereInput | Prisma.ImmunizationScalarWhereInput[]
+}
+
 export type ImmunizationCreateWithoutPetInput = {
   id?: string
-  name: string
   dateAdministered: Date | string
   nextDueDate?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   medicalRecord?: Prisma.MedicalRecordCreateNestedOneWithoutImmunizationsInput
+  vaccine: Prisma.VaccineCreateNestedOneWithoutImmunizationsInput
 }
 
 export type ImmunizationUncheckedCreateWithoutPetInput = {
   id?: string
   medicalRecordId?: string | null
-  name: string
+  vaccineId: string
   dateAdministered: Date | string
   nextDueDate?: Date | string | null
   createdAt?: Date | string
@@ -522,7 +566,7 @@ export type ImmunizationScalarWhereInput = {
   id?: Prisma.StringFilter<"Immunization"> | string
   petId?: Prisma.StringFilter<"Immunization"> | string
   medicalRecordId?: Prisma.StringNullableFilter<"Immunization"> | string | null
-  name?: Prisma.StringFilter<"Immunization"> | string
+  vaccineId?: Prisma.StringFilter<"Immunization"> | string
   dateAdministered?: Prisma.DateTimeFilter<"Immunization"> | Date | string
   nextDueDate?: Prisma.DateTimeNullableFilter<"Immunization"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Immunization"> | Date | string
@@ -531,18 +575,18 @@ export type ImmunizationScalarWhereInput = {
 
 export type ImmunizationCreateWithoutMedicalRecordInput = {
   id?: string
-  name: string
   dateAdministered: Date | string
   nextDueDate?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   pet: Prisma.PetCreateNestedOneWithoutImmunizationsInput
+  vaccine: Prisma.VaccineCreateNestedOneWithoutImmunizationsInput
 }
 
 export type ImmunizationUncheckedCreateWithoutMedicalRecordInput = {
   id?: string
   petId: string
-  name: string
+  vaccineId: string
   dateAdministered: Date | string
   nextDueDate?: Date | string | null
   createdAt?: Date | string
@@ -575,10 +619,56 @@ export type ImmunizationUpdateManyWithWhereWithoutMedicalRecordInput = {
   data: Prisma.XOR<Prisma.ImmunizationUpdateManyMutationInput, Prisma.ImmunizationUncheckedUpdateManyWithoutMedicalRecordInput>
 }
 
+export type ImmunizationCreateWithoutVaccineInput = {
+  id?: string
+  dateAdministered: Date | string
+  nextDueDate?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  pet: Prisma.PetCreateNestedOneWithoutImmunizationsInput
+  medicalRecord?: Prisma.MedicalRecordCreateNestedOneWithoutImmunizationsInput
+}
+
+export type ImmunizationUncheckedCreateWithoutVaccineInput = {
+  id?: string
+  petId: string
+  medicalRecordId?: string | null
+  dateAdministered: Date | string
+  nextDueDate?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ImmunizationCreateOrConnectWithoutVaccineInput = {
+  where: Prisma.ImmunizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.ImmunizationCreateWithoutVaccineInput, Prisma.ImmunizationUncheckedCreateWithoutVaccineInput>
+}
+
+export type ImmunizationCreateManyVaccineInputEnvelope = {
+  data: Prisma.ImmunizationCreateManyVaccineInput | Prisma.ImmunizationCreateManyVaccineInput[]
+  skipDuplicates?: boolean
+}
+
+export type ImmunizationUpsertWithWhereUniqueWithoutVaccineInput = {
+  where: Prisma.ImmunizationWhereUniqueInput
+  update: Prisma.XOR<Prisma.ImmunizationUpdateWithoutVaccineInput, Prisma.ImmunizationUncheckedUpdateWithoutVaccineInput>
+  create: Prisma.XOR<Prisma.ImmunizationCreateWithoutVaccineInput, Prisma.ImmunizationUncheckedCreateWithoutVaccineInput>
+}
+
+export type ImmunizationUpdateWithWhereUniqueWithoutVaccineInput = {
+  where: Prisma.ImmunizationWhereUniqueInput
+  data: Prisma.XOR<Prisma.ImmunizationUpdateWithoutVaccineInput, Prisma.ImmunizationUncheckedUpdateWithoutVaccineInput>
+}
+
+export type ImmunizationUpdateManyWithWhereWithoutVaccineInput = {
+  where: Prisma.ImmunizationScalarWhereInput
+  data: Prisma.XOR<Prisma.ImmunizationUpdateManyMutationInput, Prisma.ImmunizationUncheckedUpdateManyWithoutVaccineInput>
+}
+
 export type ImmunizationCreateManyPetInput = {
   id?: string
   medicalRecordId?: string | null
-  name: string
+  vaccineId: string
   dateAdministered: Date | string
   nextDueDate?: Date | string | null
   createdAt?: Date | string
@@ -587,18 +677,18 @@ export type ImmunizationCreateManyPetInput = {
 
 export type ImmunizationUpdateWithoutPetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   dateAdministered?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   nextDueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   medicalRecord?: Prisma.MedicalRecordUpdateOneWithoutImmunizationsNestedInput
+  vaccine?: Prisma.VaccineUpdateOneRequiredWithoutImmunizationsNestedInput
 }
 
 export type ImmunizationUncheckedUpdateWithoutPetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   medicalRecordId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  vaccineId?: Prisma.StringFieldUpdateOperationsInput | string
   dateAdministered?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   nextDueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -608,7 +698,7 @@ export type ImmunizationUncheckedUpdateWithoutPetInput = {
 export type ImmunizationUncheckedUpdateManyWithoutPetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   medicalRecordId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  vaccineId?: Prisma.StringFieldUpdateOperationsInput | string
   dateAdministered?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   nextDueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -618,7 +708,7 @@ export type ImmunizationUncheckedUpdateManyWithoutPetInput = {
 export type ImmunizationCreateManyMedicalRecordInput = {
   id?: string
   petId: string
-  name: string
+  vaccineId: string
   dateAdministered: Date | string
   nextDueDate?: Date | string | null
   createdAt?: Date | string
@@ -627,18 +717,18 @@ export type ImmunizationCreateManyMedicalRecordInput = {
 
 export type ImmunizationUpdateWithoutMedicalRecordInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   dateAdministered?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   nextDueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pet?: Prisma.PetUpdateOneRequiredWithoutImmunizationsNestedInput
+  vaccine?: Prisma.VaccineUpdateOneRequiredWithoutImmunizationsNestedInput
 }
 
 export type ImmunizationUncheckedUpdateWithoutMedicalRecordInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   petId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  vaccineId?: Prisma.StringFieldUpdateOperationsInput | string
   dateAdministered?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   nextDueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -648,7 +738,47 @@ export type ImmunizationUncheckedUpdateWithoutMedicalRecordInput = {
 export type ImmunizationUncheckedUpdateManyWithoutMedicalRecordInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   petId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  vaccineId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateAdministered?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nextDueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ImmunizationCreateManyVaccineInput = {
+  id?: string
+  petId: string
+  medicalRecordId?: string | null
+  dateAdministered: Date | string
+  nextDueDate?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ImmunizationUpdateWithoutVaccineInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  dateAdministered?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nextDueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pet?: Prisma.PetUpdateOneRequiredWithoutImmunizationsNestedInput
+  medicalRecord?: Prisma.MedicalRecordUpdateOneWithoutImmunizationsNestedInput
+}
+
+export type ImmunizationUncheckedUpdateWithoutVaccineInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  petId?: Prisma.StringFieldUpdateOperationsInput | string
+  medicalRecordId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateAdministered?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nextDueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ImmunizationUncheckedUpdateManyWithoutVaccineInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  petId?: Prisma.StringFieldUpdateOperationsInput | string
+  medicalRecordId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateAdministered?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   nextDueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -661,64 +791,70 @@ export type ImmunizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   id?: boolean
   petId?: boolean
   medicalRecordId?: boolean
-  name?: boolean
+  vaccineId?: boolean
   dateAdministered?: boolean
   nextDueDate?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   pet?: boolean | Prisma.PetDefaultArgs<ExtArgs>
   medicalRecord?: boolean | Prisma.Immunization$medicalRecordArgs<ExtArgs>
+  vaccine?: boolean | Prisma.VaccineDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["immunization"]>
 
 export type ImmunizationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   petId?: boolean
   medicalRecordId?: boolean
-  name?: boolean
+  vaccineId?: boolean
   dateAdministered?: boolean
   nextDueDate?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   pet?: boolean | Prisma.PetDefaultArgs<ExtArgs>
   medicalRecord?: boolean | Prisma.Immunization$medicalRecordArgs<ExtArgs>
+  vaccine?: boolean | Prisma.VaccineDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["immunization"]>
 
 export type ImmunizationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   petId?: boolean
   medicalRecordId?: boolean
-  name?: boolean
+  vaccineId?: boolean
   dateAdministered?: boolean
   nextDueDate?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   pet?: boolean | Prisma.PetDefaultArgs<ExtArgs>
   medicalRecord?: boolean | Prisma.Immunization$medicalRecordArgs<ExtArgs>
+  vaccine?: boolean | Prisma.VaccineDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["immunization"]>
 
 export type ImmunizationSelectScalar = {
   id?: boolean
   petId?: boolean
   medicalRecordId?: boolean
-  name?: boolean
+  vaccineId?: boolean
   dateAdministered?: boolean
   nextDueDate?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ImmunizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "petId" | "medicalRecordId" | "name" | "dateAdministered" | "nextDueDate" | "createdAt" | "updatedAt", ExtArgs["result"]["immunization"]>
+export type ImmunizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "petId" | "medicalRecordId" | "vaccineId" | "dateAdministered" | "nextDueDate" | "createdAt" | "updatedAt", ExtArgs["result"]["immunization"]>
 export type ImmunizationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   pet?: boolean | Prisma.PetDefaultArgs<ExtArgs>
   medicalRecord?: boolean | Prisma.Immunization$medicalRecordArgs<ExtArgs>
+  vaccine?: boolean | Prisma.VaccineDefaultArgs<ExtArgs>
 }
 export type ImmunizationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   pet?: boolean | Prisma.PetDefaultArgs<ExtArgs>
   medicalRecord?: boolean | Prisma.Immunization$medicalRecordArgs<ExtArgs>
+  vaccine?: boolean | Prisma.VaccineDefaultArgs<ExtArgs>
 }
 export type ImmunizationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   pet?: boolean | Prisma.PetDefaultArgs<ExtArgs>
   medicalRecord?: boolean | Prisma.Immunization$medicalRecordArgs<ExtArgs>
+  vaccine?: boolean | Prisma.VaccineDefaultArgs<ExtArgs>
 }
 
 export type $ImmunizationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -726,12 +862,13 @@ export type $ImmunizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
   objects: {
     pet: Prisma.$PetPayload<ExtArgs>
     medicalRecord: Prisma.$MedicalRecordPayload<ExtArgs> | null
+    vaccine: Prisma.$VaccinePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     petId: string
     medicalRecordId: string | null
-    name: string
+    vaccineId: string
     dateAdministered: Date
     nextDueDate: Date | null
     createdAt: Date
@@ -1132,6 +1269,7 @@ export interface Prisma__ImmunizationClient<T, Null = never, ExtArgs extends run
   readonly [Symbol.toStringTag]: "PrismaPromise"
   pet<T extends Prisma.PetDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PetDefaultArgs<ExtArgs>>): Prisma.Prisma__PetClient<runtime.Types.Result.GetResult<Prisma.$PetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   medicalRecord<T extends Prisma.Immunization$medicalRecordArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Immunization$medicalRecordArgs<ExtArgs>>): Prisma.Prisma__MedicalRecordClient<runtime.Types.Result.GetResult<Prisma.$MedicalRecordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  vaccine<T extends Prisma.VaccineDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VaccineDefaultArgs<ExtArgs>>): Prisma.Prisma__VaccineClient<runtime.Types.Result.GetResult<Prisma.$VaccinePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1164,7 +1302,7 @@ export interface ImmunizationFieldRefs {
   readonly id: Prisma.FieldRef<"Immunization", 'String'>
   readonly petId: Prisma.FieldRef<"Immunization", 'String'>
   readonly medicalRecordId: Prisma.FieldRef<"Immunization", 'String'>
-  readonly name: Prisma.FieldRef<"Immunization", 'String'>
+  readonly vaccineId: Prisma.FieldRef<"Immunization", 'String'>
   readonly dateAdministered: Prisma.FieldRef<"Immunization", 'DateTime'>
   readonly nextDueDate: Prisma.FieldRef<"Immunization", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Immunization", 'DateTime'>

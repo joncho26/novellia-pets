@@ -56,6 +56,7 @@ export const ModelName = {
   EmergencyContact: 'EmergencyContact',
   MedicalRecord: 'MedicalRecord',
   Treatment: 'Treatment',
+  Vaccine: 'Vaccine',
   Immunization: 'Immunization',
   Diagnostic: 'Diagnostic',
   Medication: 'Medication'
@@ -156,11 +157,23 @@ export const TreatmentScalarFieldEnum = {
 export type TreatmentScalarFieldEnum = (typeof TreatmentScalarFieldEnum)[keyof typeof TreatmentScalarFieldEnum]
 
 
+export const VaccineScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  species: 'species',
+  defaultIntervalMonths: 'defaultIntervalMonths',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VaccineScalarFieldEnum = (typeof VaccineScalarFieldEnum)[keyof typeof VaccineScalarFieldEnum]
+
+
 export const ImmunizationScalarFieldEnum = {
   id: 'id',
   petId: 'petId',
   medicalRecordId: 'medicalRecordId',
-  name: 'name',
+  vaccineId: 'vaccineId',
   dateAdministered: 'dateAdministered',
   nextDueDate: 'nextDueDate',
   createdAt: 'createdAt',

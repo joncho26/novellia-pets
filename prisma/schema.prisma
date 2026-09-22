@@ -35,6 +35,9 @@ model Pet {
   diagnostics Diagnostic[]
   medications Medication[]
   medicalRecords MedicalRecord[]
+  emergencyContacts EmergencyContact[]
+
+  @@index([ownerId])
 
   @@map("pets")
 }
@@ -58,6 +61,7 @@ model EmergencyContact {
   petOwnerId String
   petOwner PetOwner @relation(fields: [petOwnerId], references: [id])
   petId String?
+  pet Pet? @relation(fields: [petId], references: [id])
   firstName String
   lastName String
   relationship ContactRelation
@@ -68,6 +72,9 @@ model EmergencyContact {
   updatedAt DateTime @updatedAt
 
   vetMedicalRecords MedicalRecord[]
+
+  @@index([petOwnerId])
+  @@index([petId])
 
   @@map("emergency_contacts")
 }
@@ -80,7 +87,7 @@ model MedicalRecord {
   vetContactId String?
   vetName String?
   vet EmergencyContact? @relation(fields: [vetContactId], references: [id])
-  notes String
+  notes String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -113,11 +120,27 @@ model Treatment {
   @@map("treatments")
 }
 
+model Vaccine {
+  id String @id @default(uuid())
+  name String
+  species PetType
+  defaultIntervalMonths Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  immunizations Immunization[]
+
+  @@unique([name, species])
+  @@index([species])
+
+  @@map("vaccines")
+}
+
 model Immunization {
   id String @id @default(uuid())
   petId String
   medicalRecordId String?
-  name String
+  vaccineId String
   dateAdministered DateTime
   nextDueDate DateTime?
   createdAt DateTime @default(now())
@@ -125,9 +148,11 @@ model Immunization {
 
   pet Pet @relation(fields: [petId], references: [id])
   medicalRecord MedicalRecord? @relation(fields: [medicalRecordId], references: [id])
+  vaccine Vaccine @relation(fields: [vaccineId], references: [id])
 
   @@index([petId])
   @@index([medicalRecordId])
+  @@index([vaccineId])
 
   @@map("immunizations")
 }
@@ -176,9 +201,6 @@ model Medication {
 }
 
 
-
-
-
 enum PetType {
   DOG
   CAT 
@@ -219,6 +241,7 @@ enum MedicationStatus {
   ACTIVE
   COMPLETED
   DISCONTINUED
+  UNKNOWN
 }
 
 enum WeightUnit {

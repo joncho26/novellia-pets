@@ -302,6 +302,7 @@ export type PetWhereInput = {
   diagnostics?: Prisma.DiagnosticListRelationFilter
   medications?: Prisma.MedicationListRelationFilter
   medicalRecords?: Prisma.MedicalRecordListRelationFilter
+  emergencyContacts?: Prisma.EmergencyContactListRelationFilter
 }
 
 export type PetOrderByWithRelationInput = {
@@ -326,6 +327,7 @@ export type PetOrderByWithRelationInput = {
   diagnostics?: Prisma.DiagnosticOrderByRelationAggregateInput
   medications?: Prisma.MedicationOrderByRelationAggregateInput
   medicalRecords?: Prisma.MedicalRecordOrderByRelationAggregateInput
+  emergencyContacts?: Prisma.EmergencyContactOrderByRelationAggregateInput
 }
 
 export type PetWhereUniqueInput = Prisma.AtLeast<{
@@ -353,6 +355,7 @@ export type PetWhereUniqueInput = Prisma.AtLeast<{
   diagnostics?: Prisma.DiagnosticListRelationFilter
   medications?: Prisma.MedicationListRelationFilter
   medicalRecords?: Prisma.MedicalRecordListRelationFilter
+  emergencyContacts?: Prisma.EmergencyContactListRelationFilter
 }, "id" | "microchipId">
 
 export type PetOrderByWithAggregationInput = {
@@ -420,6 +423,7 @@ export type PetCreateInput = {
   diagnostics?: Prisma.DiagnosticCreateNestedManyWithoutPetInput
   medications?: Prisma.MedicationCreateNestedManyWithoutPetInput
   medicalRecords?: Prisma.MedicalRecordCreateNestedManyWithoutPetInput
+  emergencyContacts?: Prisma.EmergencyContactCreateNestedManyWithoutPetInput
 }
 
 export type PetUncheckedCreateInput = {
@@ -443,6 +447,7 @@ export type PetUncheckedCreateInput = {
   diagnostics?: Prisma.DiagnosticUncheckedCreateNestedManyWithoutPetInput
   medications?: Prisma.MedicationUncheckedCreateNestedManyWithoutPetInput
   medicalRecords?: Prisma.MedicalRecordUncheckedCreateNestedManyWithoutPetInput
+  emergencyContacts?: Prisma.EmergencyContactUncheckedCreateNestedManyWithoutPetInput
 }
 
 export type PetUpdateInput = {
@@ -466,6 +471,7 @@ export type PetUpdateInput = {
   diagnostics?: Prisma.DiagnosticUpdateManyWithoutPetNestedInput
   medications?: Prisma.MedicationUpdateManyWithoutPetNestedInput
   medicalRecords?: Prisma.MedicalRecordUpdateManyWithoutPetNestedInput
+  emergencyContacts?: Prisma.EmergencyContactUpdateManyWithoutPetNestedInput
 }
 
 export type PetUncheckedUpdateInput = {
@@ -489,6 +495,7 @@ export type PetUncheckedUpdateInput = {
   diagnostics?: Prisma.DiagnosticUncheckedUpdateManyWithoutPetNestedInput
   medications?: Prisma.MedicationUncheckedUpdateManyWithoutPetNestedInput
   medicalRecords?: Prisma.MedicalRecordUncheckedUpdateManyWithoutPetNestedInput
+  emergencyContacts?: Prisma.EmergencyContactUncheckedUpdateManyWithoutPetNestedInput
 }
 
 export type PetCreateManyInput = {
@@ -616,6 +623,11 @@ export type PetOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type PetNullableScalarRelationFilter = {
+  is?: Prisma.PetWhereInput | null
+  isNot?: Prisma.PetWhereInput | null
+}
+
 export type PetScalarRelationFilter = {
   is?: Prisma.PetWhereInput
   isNot?: Prisma.PetWhereInput
@@ -701,6 +713,22 @@ export type PetUncheckedUpdateManyWithoutOwnerNestedInput = {
   update?: Prisma.PetUpdateWithWhereUniqueWithoutOwnerInput | Prisma.PetUpdateWithWhereUniqueWithoutOwnerInput[]
   updateMany?: Prisma.PetUpdateManyWithWhereWithoutOwnerInput | Prisma.PetUpdateManyWithWhereWithoutOwnerInput[]
   deleteMany?: Prisma.PetScalarWhereInput | Prisma.PetScalarWhereInput[]
+}
+
+export type PetCreateNestedOneWithoutEmergencyContactsInput = {
+  create?: Prisma.XOR<Prisma.PetCreateWithoutEmergencyContactsInput, Prisma.PetUncheckedCreateWithoutEmergencyContactsInput>
+  connectOrCreate?: Prisma.PetCreateOrConnectWithoutEmergencyContactsInput
+  connect?: Prisma.PetWhereUniqueInput
+}
+
+export type PetUpdateOneWithoutEmergencyContactsNestedInput = {
+  create?: Prisma.XOR<Prisma.PetCreateWithoutEmergencyContactsInput, Prisma.PetUncheckedCreateWithoutEmergencyContactsInput>
+  connectOrCreate?: Prisma.PetCreateOrConnectWithoutEmergencyContactsInput
+  upsert?: Prisma.PetUpsertWithoutEmergencyContactsInput
+  disconnect?: Prisma.PetWhereInput | boolean
+  delete?: Prisma.PetWhereInput | boolean
+  connect?: Prisma.PetWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PetUpdateToOneWithWhereWithoutEmergencyContactsInput, Prisma.PetUpdateWithoutEmergencyContactsInput>, Prisma.PetUncheckedUpdateWithoutEmergencyContactsInput>
 }
 
 export type PetCreateNestedOneWithoutMedicalRecordsInput = {
@@ -793,6 +821,7 @@ export type PetCreateWithoutOwnerInput = {
   diagnostics?: Prisma.DiagnosticCreateNestedManyWithoutPetInput
   medications?: Prisma.MedicationCreateNestedManyWithoutPetInput
   medicalRecords?: Prisma.MedicalRecordCreateNestedManyWithoutPetInput
+  emergencyContacts?: Prisma.EmergencyContactCreateNestedManyWithoutPetInput
 }
 
 export type PetUncheckedCreateWithoutOwnerInput = {
@@ -815,6 +844,7 @@ export type PetUncheckedCreateWithoutOwnerInput = {
   diagnostics?: Prisma.DiagnosticUncheckedCreateNestedManyWithoutPetInput
   medications?: Prisma.MedicationUncheckedCreateNestedManyWithoutPetInput
   medicalRecords?: Prisma.MedicalRecordUncheckedCreateNestedManyWithoutPetInput
+  emergencyContacts?: Prisma.EmergencyContactUncheckedCreateNestedManyWithoutPetInput
 }
 
 export type PetCreateOrConnectWithoutOwnerInput = {
@@ -864,6 +894,114 @@ export type PetScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Pet"> | Date | string
 }
 
+export type PetCreateWithoutEmergencyContactsInput = {
+  id?: string
+  microchipId?: string | null
+  microchipRegistry?: string | null
+  microchipDate?: Date | string | null
+  name: string
+  type: $Enums.PetType
+  breed?: string | null
+  dateOfBirth: Date | string
+  weight: number
+  weightUnit: $Enums.WeightUnit
+  sex: $Enums.PetSex
+  neutered?: boolean | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  owner: Prisma.PetOwnerCreateNestedOneWithoutPetsInput
+  treatments?: Prisma.TreatmentCreateNestedManyWithoutPetInput
+  immunizations?: Prisma.ImmunizationCreateNestedManyWithoutPetInput
+  diagnostics?: Prisma.DiagnosticCreateNestedManyWithoutPetInput
+  medications?: Prisma.MedicationCreateNestedManyWithoutPetInput
+  medicalRecords?: Prisma.MedicalRecordCreateNestedManyWithoutPetInput
+}
+
+export type PetUncheckedCreateWithoutEmergencyContactsInput = {
+  id?: string
+  microchipId?: string | null
+  microchipRegistry?: string | null
+  microchipDate?: Date | string | null
+  name: string
+  type: $Enums.PetType
+  breed?: string | null
+  dateOfBirth: Date | string
+  weight: number
+  weightUnit: $Enums.WeightUnit
+  sex: $Enums.PetSex
+  neutered?: boolean | null
+  ownerId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  treatments?: Prisma.TreatmentUncheckedCreateNestedManyWithoutPetInput
+  immunizations?: Prisma.ImmunizationUncheckedCreateNestedManyWithoutPetInput
+  diagnostics?: Prisma.DiagnosticUncheckedCreateNestedManyWithoutPetInput
+  medications?: Prisma.MedicationUncheckedCreateNestedManyWithoutPetInput
+  medicalRecords?: Prisma.MedicalRecordUncheckedCreateNestedManyWithoutPetInput
+}
+
+export type PetCreateOrConnectWithoutEmergencyContactsInput = {
+  where: Prisma.PetWhereUniqueInput
+  create: Prisma.XOR<Prisma.PetCreateWithoutEmergencyContactsInput, Prisma.PetUncheckedCreateWithoutEmergencyContactsInput>
+}
+
+export type PetUpsertWithoutEmergencyContactsInput = {
+  update: Prisma.XOR<Prisma.PetUpdateWithoutEmergencyContactsInput, Prisma.PetUncheckedUpdateWithoutEmergencyContactsInput>
+  create: Prisma.XOR<Prisma.PetCreateWithoutEmergencyContactsInput, Prisma.PetUncheckedCreateWithoutEmergencyContactsInput>
+  where?: Prisma.PetWhereInput
+}
+
+export type PetUpdateToOneWithWhereWithoutEmergencyContactsInput = {
+  where?: Prisma.PetWhereInput
+  data: Prisma.XOR<Prisma.PetUpdateWithoutEmergencyContactsInput, Prisma.PetUncheckedUpdateWithoutEmergencyContactsInput>
+}
+
+export type PetUpdateWithoutEmergencyContactsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  microchipId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  microchipRegistry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  microchipDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumPetTypeFieldUpdateOperationsInput | $Enums.PetType
+  breed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
+  weightUnit?: Prisma.EnumWeightUnitFieldUpdateOperationsInput | $Enums.WeightUnit
+  sex?: Prisma.EnumPetSexFieldUpdateOperationsInput | $Enums.PetSex
+  neutered?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  owner?: Prisma.PetOwnerUpdateOneRequiredWithoutPetsNestedInput
+  treatments?: Prisma.TreatmentUpdateManyWithoutPetNestedInput
+  immunizations?: Prisma.ImmunizationUpdateManyWithoutPetNestedInput
+  diagnostics?: Prisma.DiagnosticUpdateManyWithoutPetNestedInput
+  medications?: Prisma.MedicationUpdateManyWithoutPetNestedInput
+  medicalRecords?: Prisma.MedicalRecordUpdateManyWithoutPetNestedInput
+}
+
+export type PetUncheckedUpdateWithoutEmergencyContactsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  microchipId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  microchipRegistry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  microchipDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumPetTypeFieldUpdateOperationsInput | $Enums.PetType
+  breed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
+  weightUnit?: Prisma.EnumWeightUnitFieldUpdateOperationsInput | $Enums.WeightUnit
+  sex?: Prisma.EnumPetSexFieldUpdateOperationsInput | $Enums.PetSex
+  neutered?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  treatments?: Prisma.TreatmentUncheckedUpdateManyWithoutPetNestedInput
+  immunizations?: Prisma.ImmunizationUncheckedUpdateManyWithoutPetNestedInput
+  diagnostics?: Prisma.DiagnosticUncheckedUpdateManyWithoutPetNestedInput
+  medications?: Prisma.MedicationUncheckedUpdateManyWithoutPetNestedInput
+  medicalRecords?: Prisma.MedicalRecordUncheckedUpdateManyWithoutPetNestedInput
+}
+
 export type PetCreateWithoutMedicalRecordsInput = {
   id?: string
   microchipId?: string | null
@@ -884,6 +1022,7 @@ export type PetCreateWithoutMedicalRecordsInput = {
   immunizations?: Prisma.ImmunizationCreateNestedManyWithoutPetInput
   diagnostics?: Prisma.DiagnosticCreateNestedManyWithoutPetInput
   medications?: Prisma.MedicationCreateNestedManyWithoutPetInput
+  emergencyContacts?: Prisma.EmergencyContactCreateNestedManyWithoutPetInput
 }
 
 export type PetUncheckedCreateWithoutMedicalRecordsInput = {
@@ -906,6 +1045,7 @@ export type PetUncheckedCreateWithoutMedicalRecordsInput = {
   immunizations?: Prisma.ImmunizationUncheckedCreateNestedManyWithoutPetInput
   diagnostics?: Prisma.DiagnosticUncheckedCreateNestedManyWithoutPetInput
   medications?: Prisma.MedicationUncheckedCreateNestedManyWithoutPetInput
+  emergencyContacts?: Prisma.EmergencyContactUncheckedCreateNestedManyWithoutPetInput
 }
 
 export type PetCreateOrConnectWithoutMedicalRecordsInput = {
@@ -944,6 +1084,7 @@ export type PetUpdateWithoutMedicalRecordsInput = {
   immunizations?: Prisma.ImmunizationUpdateManyWithoutPetNestedInput
   diagnostics?: Prisma.DiagnosticUpdateManyWithoutPetNestedInput
   medications?: Prisma.MedicationUpdateManyWithoutPetNestedInput
+  emergencyContacts?: Prisma.EmergencyContactUpdateManyWithoutPetNestedInput
 }
 
 export type PetUncheckedUpdateWithoutMedicalRecordsInput = {
@@ -966,6 +1107,7 @@ export type PetUncheckedUpdateWithoutMedicalRecordsInput = {
   immunizations?: Prisma.ImmunizationUncheckedUpdateManyWithoutPetNestedInput
   diagnostics?: Prisma.DiagnosticUncheckedUpdateManyWithoutPetNestedInput
   medications?: Prisma.MedicationUncheckedUpdateManyWithoutPetNestedInput
+  emergencyContacts?: Prisma.EmergencyContactUncheckedUpdateManyWithoutPetNestedInput
 }
 
 export type PetCreateWithoutTreatmentsInput = {
@@ -988,6 +1130,7 @@ export type PetCreateWithoutTreatmentsInput = {
   diagnostics?: Prisma.DiagnosticCreateNestedManyWithoutPetInput
   medications?: Prisma.MedicationCreateNestedManyWithoutPetInput
   medicalRecords?: Prisma.MedicalRecordCreateNestedManyWithoutPetInput
+  emergencyContacts?: Prisma.EmergencyContactCreateNestedManyWithoutPetInput
 }
 
 export type PetUncheckedCreateWithoutTreatmentsInput = {
@@ -1010,6 +1153,7 @@ export type PetUncheckedCreateWithoutTreatmentsInput = {
   diagnostics?: Prisma.DiagnosticUncheckedCreateNestedManyWithoutPetInput
   medications?: Prisma.MedicationUncheckedCreateNestedManyWithoutPetInput
   medicalRecords?: Prisma.MedicalRecordUncheckedCreateNestedManyWithoutPetInput
+  emergencyContacts?: Prisma.EmergencyContactUncheckedCreateNestedManyWithoutPetInput
 }
 
 export type PetCreateOrConnectWithoutTreatmentsInput = {
@@ -1048,6 +1192,7 @@ export type PetUpdateWithoutTreatmentsInput = {
   diagnostics?: Prisma.DiagnosticUpdateManyWithoutPetNestedInput
   medications?: Prisma.MedicationUpdateManyWithoutPetNestedInput
   medicalRecords?: Prisma.MedicalRecordUpdateManyWithoutPetNestedInput
+  emergencyContacts?: Prisma.EmergencyContactUpdateManyWithoutPetNestedInput
 }
 
 export type PetUncheckedUpdateWithoutTreatmentsInput = {
@@ -1070,6 +1215,7 @@ export type PetUncheckedUpdateWithoutTreatmentsInput = {
   diagnostics?: Prisma.DiagnosticUncheckedUpdateManyWithoutPetNestedInput
   medications?: Prisma.MedicationUncheckedUpdateManyWithoutPetNestedInput
   medicalRecords?: Prisma.MedicalRecordUncheckedUpdateManyWithoutPetNestedInput
+  emergencyContacts?: Prisma.EmergencyContactUncheckedUpdateManyWithoutPetNestedInput
 }
 
 export type PetCreateWithoutImmunizationsInput = {
@@ -1092,6 +1238,7 @@ export type PetCreateWithoutImmunizationsInput = {
   diagnostics?: Prisma.DiagnosticCreateNestedManyWithoutPetInput
   medications?: Prisma.MedicationCreateNestedManyWithoutPetInput
   medicalRecords?: Prisma.MedicalRecordCreateNestedManyWithoutPetInput
+  emergencyContacts?: Prisma.EmergencyContactCreateNestedManyWithoutPetInput
 }
 
 export type PetUncheckedCreateWithoutImmunizationsInput = {
@@ -1114,6 +1261,7 @@ export type PetUncheckedCreateWithoutImmunizationsInput = {
   diagnostics?: Prisma.DiagnosticUncheckedCreateNestedManyWithoutPetInput
   medications?: Prisma.MedicationUncheckedCreateNestedManyWithoutPetInput
   medicalRecords?: Prisma.MedicalRecordUncheckedCreateNestedManyWithoutPetInput
+  emergencyContacts?: Prisma.EmergencyContactUncheckedCreateNestedManyWithoutPetInput
 }
 
 export type PetCreateOrConnectWithoutImmunizationsInput = {
@@ -1152,6 +1300,7 @@ export type PetUpdateWithoutImmunizationsInput = {
   diagnostics?: Prisma.DiagnosticUpdateManyWithoutPetNestedInput
   medications?: Prisma.MedicationUpdateManyWithoutPetNestedInput
   medicalRecords?: Prisma.MedicalRecordUpdateManyWithoutPetNestedInput
+  emergencyContacts?: Prisma.EmergencyContactUpdateManyWithoutPetNestedInput
 }
 
 export type PetUncheckedUpdateWithoutImmunizationsInput = {
@@ -1174,6 +1323,7 @@ export type PetUncheckedUpdateWithoutImmunizationsInput = {
   diagnostics?: Prisma.DiagnosticUncheckedUpdateManyWithoutPetNestedInput
   medications?: Prisma.MedicationUncheckedUpdateManyWithoutPetNestedInput
   medicalRecords?: Prisma.MedicalRecordUncheckedUpdateManyWithoutPetNestedInput
+  emergencyContacts?: Prisma.EmergencyContactUncheckedUpdateManyWithoutPetNestedInput
 }
 
 export type PetCreateWithoutDiagnosticsInput = {
@@ -1196,6 +1346,7 @@ export type PetCreateWithoutDiagnosticsInput = {
   immunizations?: Prisma.ImmunizationCreateNestedManyWithoutPetInput
   medications?: Prisma.MedicationCreateNestedManyWithoutPetInput
   medicalRecords?: Prisma.MedicalRecordCreateNestedManyWithoutPetInput
+  emergencyContacts?: Prisma.EmergencyContactCreateNestedManyWithoutPetInput
 }
 
 export type PetUncheckedCreateWithoutDiagnosticsInput = {
@@ -1218,6 +1369,7 @@ export type PetUncheckedCreateWithoutDiagnosticsInput = {
   immunizations?: Prisma.ImmunizationUncheckedCreateNestedManyWithoutPetInput
   medications?: Prisma.MedicationUncheckedCreateNestedManyWithoutPetInput
   medicalRecords?: Prisma.MedicalRecordUncheckedCreateNestedManyWithoutPetInput
+  emergencyContacts?: Prisma.EmergencyContactUncheckedCreateNestedManyWithoutPetInput
 }
 
 export type PetCreateOrConnectWithoutDiagnosticsInput = {
@@ -1256,6 +1408,7 @@ export type PetUpdateWithoutDiagnosticsInput = {
   immunizations?: Prisma.ImmunizationUpdateManyWithoutPetNestedInput
   medications?: Prisma.MedicationUpdateManyWithoutPetNestedInput
   medicalRecords?: Prisma.MedicalRecordUpdateManyWithoutPetNestedInput
+  emergencyContacts?: Prisma.EmergencyContactUpdateManyWithoutPetNestedInput
 }
 
 export type PetUncheckedUpdateWithoutDiagnosticsInput = {
@@ -1278,6 +1431,7 @@ export type PetUncheckedUpdateWithoutDiagnosticsInput = {
   immunizations?: Prisma.ImmunizationUncheckedUpdateManyWithoutPetNestedInput
   medications?: Prisma.MedicationUncheckedUpdateManyWithoutPetNestedInput
   medicalRecords?: Prisma.MedicalRecordUncheckedUpdateManyWithoutPetNestedInput
+  emergencyContacts?: Prisma.EmergencyContactUncheckedUpdateManyWithoutPetNestedInput
 }
 
 export type PetCreateWithoutMedicationsInput = {
@@ -1300,6 +1454,7 @@ export type PetCreateWithoutMedicationsInput = {
   immunizations?: Prisma.ImmunizationCreateNestedManyWithoutPetInput
   diagnostics?: Prisma.DiagnosticCreateNestedManyWithoutPetInput
   medicalRecords?: Prisma.MedicalRecordCreateNestedManyWithoutPetInput
+  emergencyContacts?: Prisma.EmergencyContactCreateNestedManyWithoutPetInput
 }
 
 export type PetUncheckedCreateWithoutMedicationsInput = {
@@ -1322,6 +1477,7 @@ export type PetUncheckedCreateWithoutMedicationsInput = {
   immunizations?: Prisma.ImmunizationUncheckedCreateNestedManyWithoutPetInput
   diagnostics?: Prisma.DiagnosticUncheckedCreateNestedManyWithoutPetInput
   medicalRecords?: Prisma.MedicalRecordUncheckedCreateNestedManyWithoutPetInput
+  emergencyContacts?: Prisma.EmergencyContactUncheckedCreateNestedManyWithoutPetInput
 }
 
 export type PetCreateOrConnectWithoutMedicationsInput = {
@@ -1360,6 +1516,7 @@ export type PetUpdateWithoutMedicationsInput = {
   immunizations?: Prisma.ImmunizationUpdateManyWithoutPetNestedInput
   diagnostics?: Prisma.DiagnosticUpdateManyWithoutPetNestedInput
   medicalRecords?: Prisma.MedicalRecordUpdateManyWithoutPetNestedInput
+  emergencyContacts?: Prisma.EmergencyContactUpdateManyWithoutPetNestedInput
 }
 
 export type PetUncheckedUpdateWithoutMedicationsInput = {
@@ -1382,6 +1539,7 @@ export type PetUncheckedUpdateWithoutMedicationsInput = {
   immunizations?: Prisma.ImmunizationUncheckedUpdateManyWithoutPetNestedInput
   diagnostics?: Prisma.DiagnosticUncheckedUpdateManyWithoutPetNestedInput
   medicalRecords?: Prisma.MedicalRecordUncheckedUpdateManyWithoutPetNestedInput
+  emergencyContacts?: Prisma.EmergencyContactUncheckedUpdateManyWithoutPetNestedInput
 }
 
 export type PetCreateManyOwnerInput = {
@@ -1421,6 +1579,7 @@ export type PetUpdateWithoutOwnerInput = {
   diagnostics?: Prisma.DiagnosticUpdateManyWithoutPetNestedInput
   medications?: Prisma.MedicationUpdateManyWithoutPetNestedInput
   medicalRecords?: Prisma.MedicalRecordUpdateManyWithoutPetNestedInput
+  emergencyContacts?: Prisma.EmergencyContactUpdateManyWithoutPetNestedInput
 }
 
 export type PetUncheckedUpdateWithoutOwnerInput = {
@@ -1443,6 +1602,7 @@ export type PetUncheckedUpdateWithoutOwnerInput = {
   diagnostics?: Prisma.DiagnosticUncheckedUpdateManyWithoutPetNestedInput
   medications?: Prisma.MedicationUncheckedUpdateManyWithoutPetNestedInput
   medicalRecords?: Prisma.MedicalRecordUncheckedUpdateManyWithoutPetNestedInput
+  emergencyContacts?: Prisma.EmergencyContactUncheckedUpdateManyWithoutPetNestedInput
 }
 
 export type PetUncheckedUpdateManyWithoutOwnerInput = {
@@ -1473,6 +1633,7 @@ export type PetCountOutputType = {
   diagnostics: number
   medications: number
   medicalRecords: number
+  emergencyContacts: number
 }
 
 export type PetCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1481,6 +1642,7 @@ export type PetCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.In
   diagnostics?: boolean | PetCountOutputTypeCountDiagnosticsArgs
   medications?: boolean | PetCountOutputTypeCountMedicationsArgs
   medicalRecords?: boolean | PetCountOutputTypeCountMedicalRecordsArgs
+  emergencyContacts?: boolean | PetCountOutputTypeCountEmergencyContactsArgs
 }
 
 /**
@@ -1528,6 +1690,13 @@ export type PetCountOutputTypeCountMedicalRecordsArgs<ExtArgs extends runtime.Ty
   where?: Prisma.MedicalRecordWhereInput
 }
 
+/**
+ * PetCountOutputType without action
+ */
+export type PetCountOutputTypeCountEmergencyContactsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.EmergencyContactWhereInput
+}
+
 
 export type PetSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1551,6 +1720,7 @@ export type PetSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   diagnostics?: boolean | Prisma.Pet$diagnosticsArgs<ExtArgs>
   medications?: boolean | Prisma.Pet$medicationsArgs<ExtArgs>
   medicalRecords?: boolean | Prisma.Pet$medicalRecordsArgs<ExtArgs>
+  emergencyContacts?: boolean | Prisma.Pet$emergencyContactsArgs<ExtArgs>
   _count?: boolean | Prisma.PetCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["pet"]>
 
@@ -1618,6 +1788,7 @@ export type PetInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   diagnostics?: boolean | Prisma.Pet$diagnosticsArgs<ExtArgs>
   medications?: boolean | Prisma.Pet$medicationsArgs<ExtArgs>
   medicalRecords?: boolean | Prisma.Pet$medicalRecordsArgs<ExtArgs>
+  emergencyContacts?: boolean | Prisma.Pet$emergencyContactsArgs<ExtArgs>
   _count?: boolean | Prisma.PetCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PetIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1636,6 +1807,7 @@ export type $PetPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     diagnostics: Prisma.$DiagnosticPayload<ExtArgs>[]
     medications: Prisma.$MedicationPayload<ExtArgs>[]
     medicalRecords: Prisma.$MedicalRecordPayload<ExtArgs>[]
+    emergencyContacts: Prisma.$EmergencyContactPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2053,6 +2225,7 @@ export interface Prisma__PetClient<T, Null = never, ExtArgs extends runtime.Type
   diagnostics<T extends Prisma.Pet$diagnosticsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Pet$diagnosticsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DiagnosticPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   medications<T extends Prisma.Pet$medicationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Pet$medicationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MedicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   medicalRecords<T extends Prisma.Pet$medicalRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Pet$medicalRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MedicalRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  emergencyContacts<T extends Prisma.Pet$emergencyContactsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Pet$emergencyContactsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EmergencyContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2615,6 +2788,30 @@ export type Pet$medicalRecordsArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.MedicalRecordScalarFieldEnum | Prisma.MedicalRecordScalarFieldEnum[]
+}
+
+/**
+ * Pet.emergencyContacts
+ */
+export type Pet$emergencyContactsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the EmergencyContact
+   */
+  select?: Prisma.EmergencyContactSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the EmergencyContact
+   */
+  omit?: Prisma.EmergencyContactOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmergencyContactInclude<ExtArgs> | null
+  where?: Prisma.EmergencyContactWhereInput
+  orderBy?: Prisma.EmergencyContactOrderByWithRelationInput | Prisma.EmergencyContactOrderByWithRelationInput[]
+  cursor?: Prisma.EmergencyContactWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.EmergencyContactScalarFieldEnum | Prisma.EmergencyContactScalarFieldEnum[]
 }
 
 /**

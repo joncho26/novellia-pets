@@ -402,6 +402,7 @@ export const ModelName = {
   EmergencyContact: 'EmergencyContact',
   MedicalRecord: 'MedicalRecord',
   Treatment: 'Treatment',
+  Vaccine: 'Vaccine',
   Immunization: 'Immunization',
   Diagnostic: 'Diagnostic',
   Medication: 'Medication'
@@ -420,7 +421,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "pet" | "petOwner" | "emergencyContact" | "medicalRecord" | "treatment" | "immunization" | "diagnostic" | "medication"
+    modelProps: "pet" | "petOwner" | "emergencyContact" | "medicalRecord" | "treatment" | "vaccine" | "immunization" | "diagnostic" | "medication"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -794,6 +795,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Vaccine: {
+      payload: Prisma.$VaccinePayload<ExtArgs>
+      fields: Prisma.VaccineFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.VaccineFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VaccinePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.VaccineFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VaccinePayload>
+        }
+        findFirst: {
+          args: Prisma.VaccineFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VaccinePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.VaccineFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VaccinePayload>
+        }
+        findMany: {
+          args: Prisma.VaccineFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VaccinePayload>[]
+        }
+        create: {
+          args: Prisma.VaccineCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VaccinePayload>
+        }
+        createMany: {
+          args: Prisma.VaccineCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.VaccineCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VaccinePayload>[]
+        }
+        delete: {
+          args: Prisma.VaccineDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VaccinePayload>
+        }
+        update: {
+          args: Prisma.VaccineUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VaccinePayload>
+        }
+        deleteMany: {
+          args: Prisma.VaccineDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.VaccineUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.VaccineUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VaccinePayload>[]
+        }
+        upsert: {
+          args: Prisma.VaccineUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VaccinePayload>
+        }
+        aggregate: {
+          args: Prisma.VaccineAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateVaccine>
+        }
+        groupBy: {
+          args: Prisma.VaccineGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VaccineGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.VaccineCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VaccineCountAggregateOutputType> | number
+        }
+      }
+    }
     Immunization: {
       payload: Prisma.$ImmunizationPayload<ExtArgs>
       fields: Prisma.ImmunizationFieldRefs
@@ -1134,11 +1209,23 @@ export const TreatmentScalarFieldEnum = {
 export type TreatmentScalarFieldEnum = (typeof TreatmentScalarFieldEnum)[keyof typeof TreatmentScalarFieldEnum]
 
 
+export const VaccineScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  species: 'species',
+  defaultIntervalMonths: 'defaultIntervalMonths',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VaccineScalarFieldEnum = (typeof VaccineScalarFieldEnum)[keyof typeof VaccineScalarFieldEnum]
+
+
 export const ImmunizationScalarFieldEnum = {
   id: 'id',
   petId: 'petId',
   medicalRecordId: 'medicalRecordId',
-  name: 'name',
+  vaccineId: 'vaccineId',
   dateAdministered: 'dateAdministered',
   nextDueDate: 'nextDueDate',
   createdAt: 'createdAt',
@@ -1317,6 +1404,20 @@ export type ListEnumContactRelationFieldRefInput<$PrismaModel> = FieldRefInputTy
 
 
 /**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'Int[]'
+ */
+export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
  * Reference to a field of type 'DiagnosticType'
  */
 export type EnumDiagnosticTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DiagnosticType'>
@@ -1355,20 +1456,6 @@ export type EnumMedicationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
  * Reference to a field of type 'MedicationStatus[]'
  */
 export type ListEnumMedicationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MedicationStatus[]'>
-    
-
-
-/**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-/**
- * Reference to a field of type 'Int[]'
- */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 /**
@@ -1527,6 +1614,7 @@ export type GlobalOmitConfig = {
   emergencyContact?: Prisma.EmergencyContactOmit
   medicalRecord?: Prisma.MedicalRecordOmit
   treatment?: Prisma.TreatmentOmit
+  vaccine?: Prisma.VaccineOmit
   immunization?: Prisma.ImmunizationOmit
   diagnostic?: Prisma.DiagnosticOmit
   medication?: Prisma.MedicationOmit

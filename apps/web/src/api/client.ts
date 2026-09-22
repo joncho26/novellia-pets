@@ -4,6 +4,7 @@ import type {
   CreatePetRequest,
   DashboardResponse,
   PetDetailResponse,
+  VaccineResponse,
   VetContactResponse,
 } from './types'
 
@@ -45,6 +46,12 @@ export function getPet(petId: string) {
 
 export function getVetContacts(petId: string) {
   return request<VetContactResponse[]>(`/pets/${petId}/vet-contacts`)
+}
+
+// Already filtered to the pet's species by the API — a cat's vaccines never
+// appear for a dog.
+export function getVaccinesForPet(petId: string) {
+  return request<VaccineResponse[]>(`/pets/${petId}/vaccines`)
 }
 
 function post<T>(path: string, body: unknown) {

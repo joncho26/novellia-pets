@@ -1,14 +1,18 @@
 import { useEffect, useId, useState, type FormEvent } from 'react'
 import { Plus } from 'lucide-react'
-import { DosageUnit, MedicationStatus } from '@api/generated/prisma/enums'
-import { createMedicalRecord, getVetContacts } from '../api/client'
-import type { CreateMedicalRecordRequest, VetContactResponse } from '../api/types'
+import { DiagnosticType, DosageUnit, MedicationStatus } from '@api/generated/prisma/enums'
+import { createMedicalRecord, getVaccinesForPet, getVetContacts } from '../api/client'
+import type { CreateMedicalRecordRequest, VaccineResponse, VetContactResponse } from '../api/types'
 import { DateField } from './DateField'
 import { Modal } from './Modal'
 import { MedicationDraftFields } from './MedicationDraftFields'
 import { TreatmentDraftFields } from './TreatmentDraftFields'
+import { DiagnosticDraftFields } from './DiagnosticDraftFields'
+import { ImmunizationDraftFields } from './ImmunizationDraftFields'
 import { emptyMedicationDraft, validateMedicationDraft } from '../medicationDraft'
 import { emptyTreatmentDraft, validateTreatmentDraft } from '../treatmentDraft'
+import { emptyDiagnosticDraft, validateDiagnosticDraft } from '../diagnosticDraft'
+import { emptyImmunizationDraft, validateImmunizationDraft } from '../immunizationDraft'
 import { useDrafts } from '../useDrafts'
 import { CTA_BUTTON, STYLES } from '../styles'
 
@@ -41,20 +45,30 @@ export function AddMedicalRecordModal({ petId, onClose, onCreated }: AddMedicalR
   // Nothing reaches the database until then.
   const medications = useDrafts(emptyMedicationDraft)
   const treatments = useDrafts(emptyTreatmentDraft)
+  const diagnostics = useDrafts(emptyDiagnosticDraft)
+  const immunizations = useDrafts(emptyImmunizationDraft)
 
   const [vetContacts, setVetContacts] = useState<VetContactResponse[]>([])
+  const [vaccines, setVaccines] = useState<VaccineResponse[]>([])
   const [dateError, setDateError] = useState<string | null>(null)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [isSaving, setIsSaving] = useState(false)
 
-  // A failure here only costs the convenience of the dropdown, so it is not
-  // surfaced as an error: the record can still be filed with a typed vet name.
+  // Neither failure is surfaced as an error over the form. Losing the vet list
+  // only costs the convenience of a dropdown, and losing the vaccine catalog
+  // disables the one button that needs it — see below.
   useEffect(() => {
     let isCurrent = true
 
     getVetContacts(petId)
       .then((contacts) => {
         if (isCurrent) setVetContacts(contacts)
+      })
+      .catch(() => {})
+
+    getVaccinesForPet(petId)
+      .then((catalog) => {
+        if (isCurrent) setVaccines(catalog)
       })
       .catch(() => {})
 
@@ -66,13 +80,23 @@ export function AddMedicalRecordModal({ petId, onClose, onCreated }: AddMedicalR
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
-    // Both validators run before the check, so errors in a treatment are not
-    // hidden by errors in a medication.
+    // Every validator runs before the check, so errors in one kind of
+    // attachment are not hidden by errors in another.
     const medicationsValid = medications.validate(validateMedicationDraft)
     const treatmentsValid = treatments.validate(validateTreatmentDraft)
+    const diagnosticsValid = diagnostics.validate(validateDiagnosticDraft)
+    const immunizationsValid = immunizations.validate(validateImmunizationDraft)
 
     if (!recordDate) setDateError('Record date is required.')
-    if (!recordDate || !medicationsValid || !treatmentsValid) return
+    if (
+      !recordDate ||
+      !medicationsValid ||
+      !treatmentsValid ||
+      !diagnosticsValid ||
+      !immunizationsValid
+    ) {
+      return
+    }
 
     const record: CreateMedicalRecordRequest = {
       petId,
@@ -104,6 +128,23 @@ export function AddMedicalRecordModal({ petId, onClose, onCreated }: AddMedicalR
         name: draft.name.trim(),
         date: toDateOnly(draft.date as Date),
         notes: draft.notes.trim() || null,
+      }))
+    }
+
+    if (diagnostics.drafts.length > 0) {
+      record.diagnostics = diagnostics.drafts.map((draft) => ({
+        type: draft.type as DiagnosticType,
+        date: toDateOnly(draft.date as Date),
+        result: draft.result.trim() || null,
+        notes: draft.notes.trim() || null,
+      }))
+    }
+
+    if (immunizations.drafts.length > 0) {
+      record.immunizations = immunizations.drafts.map((draft) => ({
+        vaccineId: draft.vaccineId,
+        dateAdministered: toDateOnly(draft.dateAdministered as Date),
+        nextDueDate: draft.nextDueDate ? toDateOnly(draft.nextDueDate) : null,
       }))
     }
 
@@ -223,6 +264,31 @@ export function AddMedicalRecordModal({ petId, onClose, onCreated }: AddMedicalR
             />
           ))}
 
+          {diagnostics.drafts.map((draft, index) => (
+            <DiagnosticDraftFields
+              key={draft.key}
+              draft={draft}
+              index={index}
+              errors={diagnostics.errors[draft.key] ?? {}}
+              fieldId={fieldId}
+              onChange={(patch) => diagnostics.update(draft.key, patch)}
+              onRemove={() => diagnostics.remove(draft.key)}
+            />
+          ))}
+
+          {immunizations.drafts.map((draft, index) => (
+            <ImmunizationDraftFields
+              key={draft.key}
+              draft={draft}
+              index={index}
+              errors={immunizations.errors[draft.key] ?? {}}
+              fieldId={fieldId}
+              vaccines={vaccines}
+              onChange={(patch) => immunizations.update(draft.key, patch)}
+              onRemove={() => immunizations.remove(draft.key)}
+            />
+          ))}
+
           <div className="flex flex-wrap gap-2">
             <button type="button" className={ATTACH_BUTTON} onClick={medications.add}>
               <Plus size={12} aria-hidden="true" />
@@ -232,16 +298,28 @@ export function AddMedicalRecordModal({ petId, onClose, onCreated }: AddMedicalR
               <Plus size={12} aria-hidden="true" />
               Treatment
             </button>
-            {/* The remaining two follow the same pattern; not wired yet. */}
-            <button type="button" className={ATTACH_BUTTON} disabled>
+            <button type="button" className={ATTACH_BUTTON} onClick={diagnostics.add}>
               <Plus size={12} aria-hidden="true" />
               Diagnostic
             </button>
-            <button type="button" className={ATTACH_BUTTON} disabled>
+            {/* An immunization is a reference to a vaccine, so without the
+                catalog there is nothing valid to submit. */}
+            <button
+              type="button"
+              className={ATTACH_BUTTON}
+              onClick={immunizations.add}
+              disabled={vaccines.length === 0}
+            >
               <Plus size={12} aria-hidden="true" />
               Immunization
             </button>
           </div>
+
+          {vaccines.length === 0 && (
+            <p className="text-[0.8rem] opacity-65">
+              The vaccine list is unavailable, so immunizations can’t be added right now.
+            </p>
+          )}
         </div>
 
         {submitError && <p className="text-danger">Could not add record: {submitError}</p>}

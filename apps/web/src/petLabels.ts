@@ -1,4 +1,5 @@
 import {
+  DiagnosticType,
   DosageUnit,
   MedicationStatus,
   PetSex,
@@ -27,6 +28,16 @@ export const PET_SEX_LABEL: Record<PetSex, string> = {
   [PetSex.MALE]: 'Male',
   [PetSex.FEMALE]: 'Female',
   [PetSex.UNKNOWN]: 'Unknown',
+}
+
+export const DIAGNOSTIC_TYPE_LABEL: Record<DiagnosticType, string> = {
+  [DiagnosticType.BLOODWORK]: 'Bloodwork',
+  [DiagnosticType.XRAY]: 'X-ray',
+  [DiagnosticType.ULTRASOUND]: 'Ultrasound',
+  [DiagnosticType.URINALYSIS]: 'Urinalysis',
+  [DiagnosticType.FECAL]: 'Fecal',
+  [DiagnosticType.BIOPSY]: 'Biopsy',
+  [DiagnosticType.OTHER]: 'Other',
 }
 
 export const DOSAGE_UNIT_LABEL: Record<DosageUnit, string> = {

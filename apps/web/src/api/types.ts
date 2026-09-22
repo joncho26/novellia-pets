@@ -1,6 +1,7 @@
 import type { DashboardView, PetDashboard } from '@api/dashboard/types/PetDashboard'
 import type { PetDetail, VetContact } from '@api/pets/types/PetDetail'
 import type {
+  DiagnosticType,
   DosageUnit,
   MedicationStatus,
   PetSex,
@@ -47,6 +48,30 @@ export interface TreatmentDetailsRequest {
   notes?: string | null
 }
 
+// The fields this app reads from a Vaccine. The endpoint also returns
+// timestamps, which nothing here uses.
+export interface VaccineResponse {
+  id: string
+  name: string
+  species: PetType
+  defaultIntervalMonths: number | null
+}
+
+// Mirrors ImmunizationDetailsDto.
+export interface ImmunizationDetailsRequest {
+  vaccineId: string
+  dateAdministered: string
+  nextDueDate?: string | null
+}
+
+// Mirrors DiagnosticDetailsDto.
+export interface DiagnosticDetailsRequest {
+  type: DiagnosticType
+  date: string
+  result?: string | null
+  notes?: string | null
+}
+
 // Mirrors CreateMedicalRecordDto. petId comes from the page, not the form, and
 // the children are written in the same transaction as the record.
 export interface CreateMedicalRecordRequest {
@@ -57,6 +82,8 @@ export interface CreateMedicalRecordRequest {
   notes?: string
   medications?: MedicationDetailsRequest[]
   treatments?: TreatmentDetailsRequest[]
+  diagnostics?: DiagnosticDetailsRequest[]
+  immunizations?: ImmunizationDetailsRequest[]
 }
 
 // Mirrors CreatePetDto. The DTO itself is a decorated class, so importing it

@@ -115,7 +115,7 @@ export function MedicationDraftFields({
         {fieldError('frequency')}
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-col gap-3">
         <div className={STYLES.FIELD}>
           <label className={STYLES.LABEL} htmlFor={`${id}-start`}>
             Start date
@@ -133,7 +133,8 @@ export function MedicationDraftFields({
           />
           {fieldError('startDate')}
         </div>
-
+      </div>
+      <div className="grid grid-col gap-3">
         <div className={STYLES.FIELD}>
           <label className={STYLES.LABEL} htmlFor={`${id}-end`}>
             End date

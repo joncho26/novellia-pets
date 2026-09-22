@@ -42,3 +42,10 @@ export interface PetDashboard {
     lastImmunization: DashboardLastImmunization | null
     nextImmunization: DashboardNextImmunization | null
 }
+
+// The owner travels with the view rather than with each pet so the client can
+// still attribute a newly created pet when the owner has none yet.
+export interface DashboardView {
+    ownerId: string
+    pets: PetDashboard[]
+}

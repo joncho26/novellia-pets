@@ -1,13 +1,13 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { MedicationStatus } from "../generated/prisma/enums";
-import { PetDashboard } from "./types/PetDashboard";
+import { DashboardView, PetDashboard } from "./types/PetDashboard";
 
 @Injectable()
 export class DashboardService {
     constructor(private prisma: PrismaService) {}
 
-    async getDashboard(): Promise<PetDashboard[]> {
+    async getDashboard(): Promise<DashboardView> {
         return this.getDashboardByOwnerId(await this.resolveCurrentOwnerId());
     }
 
@@ -19,7 +19,7 @@ export class DashboardService {
         return owner.id;
     }
 
-    async getDashboardByOwnerId(ownerId: string): Promise<PetDashboard[]> {
+    async getDashboardByOwnerId(ownerId: string): Promise<DashboardView> {
         const owner = await this.prisma.petOwner.findUnique({ where: { id: ownerId } });
         if (!owner) throw new NotFoundException('Pet owner not found');
 
@@ -68,7 +68,7 @@ export class DashboardService {
             },
         });
 
-        return pets.map((pet) => {
+        const dashboardPets: PetDashboard[] = pets.map((pet) => {
             const administered = pet.immunizations.filter((i) => i.dateAdministered <= now);
 
             // Only the latest dose of each vaccine carries a live due date; older
@@ -110,5 +110,7 @@ export class DashboardService {
                     : null,
             };
         });
+
+        return { ownerId, pets: dashboardPets };
     }
 }

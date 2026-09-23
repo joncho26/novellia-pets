@@ -3,6 +3,7 @@ import { Plus } from 'lucide-react'
 import { AddPetModal } from '../components/modals/AddPetModal'
 import { PetCard } from '../components/dashboard/PetCard'
 import { DashboardStats } from '../components/dashboard/DashboardStats'
+import { AttentionPanel } from '../components/dashboard/AttentionPanel'
 import { getDashboard } from '../api/client'
 import type { PetDashboardResponse } from '../api/types'
 import { CTA_BUTTON } from '../styles'
@@ -44,7 +45,12 @@ export function Dashboard() {
         </button>
       </header>
 
-      {!isLoading && !error && pets.length > 0 && <DashboardStats pets={pets} />}
+      {!isLoading && !error && pets.length > 0 && (
+        <>
+          <DashboardStats pets={pets} />
+          <AttentionPanel pets={pets} />
+        </>
+      )}
 
       {isLoading && <p>Loading…</p>}
       {error && <p className="text-danger">Could not load dashboard: {error}</p>}

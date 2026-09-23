@@ -60,11 +60,33 @@ export class PetsService {
         return this.prisma.pet.findUnique({ where: { id }, select: { id: true } })
     }
 
+    // Every attachment's petId is required, so the database refuses to delete a
+    // pet that still has any — deleting the pet has to mean deleting its whole
+    // history. One transaction, so a pet is never left half-erased.
+    //
+    // Emergency contacts are not in here on purpose: their petId is nullable
+    // and they belong to the owner as well, so they are unlinked rather than
+    // destroyed along with the pet.
     async deletePetById(id: string) {
         const pet = await this.petExists(id);
         if(!pet) throw new HttpException('Pet Not Found', 404);
 
-        return this.prisma.pet.delete({ where: { id } });
+        return this.prisma.$transaction(async (tx) => {
+            // The attachments first: each one points at the pet, and the pet
+            // cannot go while anything still references it.
+            await tx.medication.deleteMany({ where: { petId: id } });
+            await tx.treatment.deleteMany({ where: { petId: id } });
+            await tx.diagnostic.deleteMany({ where: { petId: id } });
+            await tx.immunization.deleteMany({ where: { petId: id } });
+            await tx.emergencyContact.updateMany({
+                where: { petId: id },
+                data: { petId: null },
+            });
+            // Then the visits, which the attachments above pointed at too.
+            await tx.medicalRecord.deleteMany({ where: { petId: id } });
+
+            return tx.pet.delete({ where: { id } });
+        });
     }
 
     async updatePetById(id: string, data: Prisma.PetUncheckedUpdateInput) {

@@ -6,10 +6,6 @@ import { DiagnosticDetailsDto } from "../../diagnostics/dtos/CreateDiagnostic.dt
 import { MedicationDetailsDto } from "../../medications/dtos/CreateMedication.dto";
 
 export class CreateMedicalRecordDto {
-    @IsString()
-    @IsNotEmpty()
-    petId: string
-
     @IsDate()
     @IsNotEmpty()
     @Type(() => Date)

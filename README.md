@@ -18,7 +18,7 @@ npx prisma migrate dev
 ```
 
 ## Seed data
-### Within the /api directory, run the seed command to seed the database.
+### Within the `/api` directory, run the seed command to seed the database.
 ```npm run db:seed```
 #### You can view the seed data in `/apps/api/prisma/seed.ts`.
 
@@ -39,7 +39,7 @@ cd apps/web
 npm run dev
 ```
 
-#### Visit http://localhost:5173 in the browser and you should see this:
+#### Visit `http://localhost:5173` in the browser and you should see this:
 
 <img width="1797" height="995" alt="Screenshot 2026-09-23 at 14 44 38" src="https://github.com/user-attachments/assets/a0190eed-b5d5-40d0-9ba6-8c42d44657f8" />
 

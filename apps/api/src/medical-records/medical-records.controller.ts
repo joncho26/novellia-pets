@@ -3,18 +3,22 @@ import { MedicalRecordsService } from "./medical-records.service";
 import { CreateMedicalRecordDto } from "./dtos/CreateMedicalRecord.dto";
 import { UpdateMedicalRecordDto } from "./dtos/UpdateMedicalRecord.dto";
 
-@Controller('medical-records')
+// No controller-level prefix, matching the other child resources: a record is
+// created under its pet but read and edited by its own id.
+@Controller()
 export class MedicalRecordsController {
     constructor(private medicalRecordsService: MedicalRecordsService){}
 
-    @Post()
-    createMedicalRecord(@Body() createMedicalRecordDto: CreateMedicalRecordDto) {
+    @Post('pets/:petId/medical-records')
+    createMedicalRecord(
+        @Param('petId', ParseUUIDPipe) petId: string,
+        @Body() createMedicalRecordDto: CreateMedicalRecordDto
+    ) {
         const { treatments, immunizations, diagnostics, medications, ...details } = createMedicalRecordDto;
-        const { petId } = details;
 
         // Nested creates run in one transaction, so a visit and everything
         // recorded during it either all land or none of them do.
-        return this.medicalRecordsService.createMedicalRecord({
+        return this.medicalRecordsService.createMedicalRecord(petId, {
             ...details,
             treatments: treatments && { create: treatments.map((t) => ({ ...t, petId })) },
             immunizations: immunizations && { create: immunizations.map((i) => ({ ...i, petId })) },
@@ -23,12 +27,17 @@ export class MedicalRecordsController {
         });
     }
 
-    @Get()
+    @Get('pets/:petId/medical-records')
+    getMedicalRecordsByPetId(@Param('petId', ParseUUIDPipe) petId: string) {
+        return this.medicalRecordsService.getMedicalRecordsByPetId(petId);
+    }
+
+    @Get('medical-records')
     async getMedicalRecords() {
         return this.medicalRecordsService.getMedicalRecords()
     }
 
-    @Get(':id')
+    @Get('medical-records/:id')
     async getMedicalRecordById(@Param('id', ParseUUIDPipe) id: string) {
         const medicalRecord = await this.medicalRecordsService.getMedicalRecordById(id);
         if (!medicalRecord) throw new NotFoundException("Medical record not found");
@@ -36,12 +45,12 @@ export class MedicalRecordsController {
         return medicalRecord;
     }
 
-    @Patch(':id')
+    @Patch('medical-records/:id')
     async updateMedicalRecordById(
         @Param('id', ParseUUIDPipe) id: string,
         @Body() updateMedicalRecordDto: UpdateMedicalRecordDto
     ) {
-        const medicalRecord = await this.medicalRecordsService.getMedicalRecordById(id);
+        const medicalRecord = await this.medicalRecordsService.getMedicalRecordRefById(id);
         if (!medicalRecord) throw new NotFoundException("Medical record not found");
 
         const { treatments, immunizations, diagnostics, medications, ...details } = updateMedicalRecordDto;
@@ -56,7 +65,7 @@ export class MedicalRecordsController {
         })
     }
 
-    @Delete(':id')
+    @Delete('medical-records/:id')
     deleteMedicalRecordById(
         @Param('id', ParseUUIDPipe) id: string) {
             return this.medicalRecordsService.deleteMedicalRecordById(id)

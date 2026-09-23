@@ -21,6 +21,9 @@ export function PetFormFields({ form, errors, fieldId, onChange }: PetFormFields
     return errors[field] ? `${fieldId}-${field}-error` : undefined
   }
 
+  // Not all pets get neutered/spayed, only show for cats and dogs
+  const showNeuteredField = form.type === PetType.CAT || form.type === PetType.DOG
+
   function fieldError(field: keyof PetFormState) {
     if (!errors[field]) return null
 
@@ -154,21 +157,23 @@ export function PetFormFields({ form, errors, fieldId, onChange }: PetFormFields
         {fieldError('sex')}
       </div>
 
-      <div className={STYLES.FIELD}>
-        <label className={STYLES.LABEL} htmlFor={`${fieldId}-neutered`}>
-          Neutered
-        </label>
-        <select
-          id={`${fieldId}-neutered`}
-          className={STYLES.CONTROL}
-          value={form.neutered}
-          onChange={(event) => onChange({ neutered: event.target.value as PetFormState['neutered'] })}
-        >
-          <option value="">Select an answer</option>
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
-      </div>
+      {showNeuteredField && (
+        <div className={STYLES.FIELD}>
+          <label className={STYLES.LABEL} htmlFor={`${fieldId}-neutered`}>
+            Neutered
+          </label>
+          <select
+            id={`${fieldId}-neutered`}
+            className={STYLES.CONTROL}
+            value={form.neutered}
+            onChange={(event) => onChange({ neutered: event.target.value as PetFormState['neutered'] })}
+          >
+            <option value="">Select an answer</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+      )}
     </>
   )
 }

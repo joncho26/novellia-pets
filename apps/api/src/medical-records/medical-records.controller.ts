@@ -32,11 +32,6 @@ export class MedicalRecordsController {
         return this.medicalRecordsService.getMedicalRecordsByPetId(petId);
     }
 
-    @Get('medical-records')
-    async getMedicalRecords() {
-        return this.medicalRecordsService.getMedicalRecords()
-    }
-
     @Get('medical-records/:id')
     async getMedicalRecordById(@Param('id', ParseUUIDPipe) id: string) {
         const medicalRecord = await this.medicalRecordsService.getMedicalRecordById(id);

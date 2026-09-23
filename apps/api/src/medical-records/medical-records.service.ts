@@ -36,22 +36,6 @@ export class MedicalRecordsService {
         });
     }
 
-    private async assertPetExists(petId: string) {
-        const pet = await this.prisma.pet.findUnique({ where: { id: petId } });
-        if (!pet) throw new NotFoundException('Pet not found');
-    }
-
-    async getMedicalRecords(): Promise<MedicalRecordWithEntriesDto[]> {
-        return this.prisma.medicalRecord.findMany({
-            include: {
-                medications: true,
-                immunizations: true,
-                diagnostics: true,
-                treatments: true
-            }
-        });
-    }
-
     getMedicalRecordById(id: string): Promise<MedicalRecordDetailsDto | null> {
         return this.prisma.medicalRecord.findUnique({
             where: { id },
@@ -102,5 +86,10 @@ export class MedicalRecordsService {
                 medications: true,
             },
         })
+    }
+
+    private async assertPetExists(petId: string) {
+        const pet = await this.prisma.pet.findUnique({ where: { id: petId } });
+        if (!pet) throw new NotFoundException('Pet not found');
     }
 }

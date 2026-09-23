@@ -1,7 +1,7 @@
 import { HttpException, Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
-import { EmergencyContact, Prisma } from "../generated/prisma/client";
-import { PetDetailsDto, PetDto } from "./dtos/Pet.dto";
+import { Prisma } from "../generated/prisma/client";
+import { PetDetailsDto, PetDto, VetContactDto } from "./dtos/Pet.dto";
 import { ContactRelation } from "../generated/prisma/enums";
 
 @Injectable()
@@ -17,10 +17,6 @@ export class PetsService {
 
     createPet(data: Prisma.PetUncheckedCreateInput): Promise<PetDto> {
         return this.prisma.pet.create({ data })
-    }
-
-    getPets(): Promise<PetDto[]> {
-        return this.prisma.pet.findMany();
     }
 
     getPetById(id: string): Promise<PetDetailsDto | null> {
@@ -46,16 +42,20 @@ export class PetsService {
     // The vets on the owner's contact list, whether or not they are tied to
     // this particular pet. Returns null when the pet does not exist, so the
     // controller can tell "no such pet" from "no vets on file".
-    async getVetContactsByPetId(id: string): Promise<EmergencyContact[] | null> {
+    async getVetContactsByPetId(id: string): Promise<VetContactDto[] | null> {
         const pet = await this.prisma.pet.findUnique({
             where: { id },
             select: { ownerId: true },
         });
         if (!pet) return null;
 
+        // Names only. This feeds a dropdown for attributing a visit, and the
+        // rest of the row is the owner's contact book — emails, phone numbers
+        // and who they belong to — which that dropdown has no use for.
         return this.prisma.emergencyContact.findMany({
             where: { petOwnerId: pet.ownerId, relationship: ContactRelation.VET },
-            orderBy: [{ lastName: 'asc' }, { firstName: 'asc' }]
+            orderBy: [{ lastName: 'asc' }, { firstName: 'asc' }],
+            select: { id: true, firstName: true, lastName: true },
         });
     }
 

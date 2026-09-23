@@ -54,6 +54,25 @@ export const MEDICATION_STATUS_LABEL: Record<MedicationStatus, string> = {
   [MedicationStatus.UNKNOWN]: 'Unknown',
 }
 
+// The dot each status wears in a list. Exhaustive like the labels, so a new
+// status has to be given a color before the app will compile.
+export const MEDICATION_STATUS_DOT: Record<MedicationStatus, string> = {
+  [MedicationStatus.COMPLETED]: 'bg-status-completed',
+  [MedicationStatus.ACTIVE]: 'bg-status-active',
+  [MedicationStatus.UNKNOWN]: 'bg-status-unknown',
+  [MedicationStatus.DISCONTINUED]: 'bg-status-discontinued',
+}
+
+// The same four hues as text. Kept in step with the dots above: a status whose
+// word and dot disagreed would read as two different states.
+export const MEDICATION_STATUS_TEXT: Record<MedicationStatus, string> = {
+  [MedicationStatus.COMPLETED]: 'text-status-completed',
+  [MedicationStatus.ACTIVE]: 'text-status-active',
+  [MedicationStatus.UNKNOWN]: 'text-status-unknown',
+  [MedicationStatus.DISCONTINUED]: 'text-status-discontinued',
+}
+
+
 export const WEIGHT_UNIT_LABEL: Record<WeightUnit, string> = {
   [WeightUnit.LB]: 'lb',
   [WeightUnit.KG]: 'kg',

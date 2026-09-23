@@ -11,9 +11,14 @@ export function DraftFieldset({
 }: {
   title: string
   removeLabel: string
-  onRemove: () => void
+  // Absent when the fields stand alone in a single-item form, where the modal's
+  // own heading already says what is being added and there is nothing to
+  // remove — the box and its legend would be noise.
+  onRemove?: () => void
   children: ReactNode
 }) {
+  if (!onRemove) return <div className="flex flex-col gap-3">{children}</div>
+
   return (
     <fieldset className="m-0 flex flex-col gap-3 rounded-lg border border-line p-4">
       <legend className="flex w-full items-center justify-between gap-2 px-1">

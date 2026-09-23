@@ -14,7 +14,7 @@ type MedicationDraftFieldsProps = {
   errors: MedicationDraftErrors
   fieldId: string
   onChange: (patch: Partial<MedicationDraft>) => void
-  onRemove: () => void
+  onRemove?: () => void
 }
 
 export function MedicationDraftFields({

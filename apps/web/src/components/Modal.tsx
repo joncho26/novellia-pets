@@ -1,4 +1,5 @@
 import { useEffect, useRef, type ReactNode } from 'react'
+import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
 
 type ModalProps = {
@@ -17,7 +18,13 @@ export function Modal({ onClose, label, children }: ModalProps) {
     dialogRef.current?.showModal()
   }, [])
 
-  return (
+  // Rendered into <body> rather than where it was written. A modal opens from
+  // wherever its trigger happens to live — a table cell, a list row — and
+  // inherited text properties follow it there: a `whitespace-nowrap` actions
+  // column stopped the confirmation text wrapping, and the table's smaller
+  // font size shrank the whole form. The portal puts the dialog outside all of
+  // that, so it looks the same no matter what opened it.
+  return createPortal(
     // The dialog is only a transparent positioning box: the panel styling lives
     // on the inner div so the close button can sit outside it, over the
     // backdrop, without being clipped by the panel's own scrolling.
@@ -41,6 +48,7 @@ export function Modal({ onClose, label, children }: ModalProps) {
       <div className="max-h-[80vh] overflow-y-auto rounded-xl border border-line bg-page p-6 text-left shadow-panel">
         {children}
       </div>
-    </dialog>
+    </dialog>,
+    document.body,
   )
 }

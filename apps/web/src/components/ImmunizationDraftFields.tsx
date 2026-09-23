@@ -1,4 +1,6 @@
-import type { VaccineResponse } from '../api/types'
+// Only what the dropdown renders. Narrower than VaccineResponse so a vaccine
+// already attached to a row — which carries no interval — can seed the list.
+export type VaccineOption = { id: string; name: string }
 import type { ImmunizationDraft, ImmunizationDraftErrors } from '../immunizationDraft'
 import { DateField } from './DateField'
 import { DraftFieldset } from './DraftFieldset'
@@ -9,9 +11,9 @@ type ImmunizationDraftFieldsProps = {
   index: number
   errors: ImmunizationDraftErrors
   fieldId: string
-  vaccines: VaccineResponse[]
+  vaccines: VaccineOption[]
   onChange: (patch: Partial<ImmunizationDraft>) => void
-  onRemove: () => void
+  onRemove?: () => void
 }
 
 export function ImmunizationDraftFields({

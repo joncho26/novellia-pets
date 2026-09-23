@@ -9,7 +9,7 @@ type TreatmentDraftFieldsProps = {
   errors: TreatmentDraftErrors
   fieldId: string
   onChange: (patch: Partial<TreatmentDraft>) => void
-  onRemove: () => void
+  onRemove?: () => void
 }
 
 export function TreatmentDraftFields({

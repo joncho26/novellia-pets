@@ -1,3 +1,5 @@
+import type { PetDetailResponse } from './api/types'
+import { parseDateOnly } from './dates'
 import type { DraftErrors } from './useDrafts'
 
 // An immunization the user has typed into the form but not yet saved. Unlike
@@ -18,6 +20,17 @@ export function emptyImmunizationDraft(): ImmunizationDraft {
     vaccineId: '',
     dateAdministered: undefined,
     nextDueDate: undefined,
+  }
+}
+
+export function immunizationDraftFrom(
+  immunization: PetDetailResponse['immunizations'][number],
+): ImmunizationDraft {
+  return {
+    key: immunization.id,
+    vaccineId: immunization.vaccineId,
+    dateAdministered: parseDateOnly(immunization.dateAdministered),
+    nextDueDate: immunization.nextDueDate ? parseDateOnly(immunization.nextDueDate) : undefined,
   }
 }
 

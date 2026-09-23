@@ -14,19 +14,11 @@ import { emptyTreatmentDraft, validateTreatmentDraft } from '../treatmentDraft'
 import { emptyDiagnosticDraft, validateDiagnosticDraft } from '../diagnosticDraft'
 import { emptyImmunizationDraft, validateImmunizationDraft } from '../immunizationDraft'
 import { useDrafts } from '../useDrafts'
+import { toDateOnly } from '../dates'
 import { CTA_BUTTON, STYLES } from '../styles'
 
 const ATTACH_BUTTON =
   'inline-flex cursor-pointer items-center gap-1 rounded-[0.4rem] border border-line px-3 py-1.5 text-[0.8rem] font-semibold tracking-[0.04em] uppercase transition-colors duration-200 hover:border-accent-line hover:bg-accent-soft disabled:cursor-not-allowed disabled:opacity-40'
-
-// The Date is local, so toISOString() would shift it across a day boundary for
-// anyone west of UTC. Format from the local parts instead.
-function toDateOnly(date: Date) {
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const day = String(date.getDate()).padStart(2, '0')
-
-  return `${date.getFullYear()}-${month}-${day}`
-}
 
 type AddMedicalRecordModalProps = {
   petId: string
@@ -99,7 +91,6 @@ export function AddMedicalRecordModal({ petId, onClose, onCreated }: AddMedicalR
     }
 
     const record: CreateMedicalRecordRequest = {
-      petId,
       recordDate: toDateOnly(recordDate),
     }
 
@@ -152,7 +143,7 @@ export function AddMedicalRecordModal({ petId, onClose, onCreated }: AddMedicalR
     setSubmitError(null)
 
     try {
-      await createMedicalRecord(record)
+      await createMedicalRecord(petId, record)
       onCreated()
     } catch (cause) {
       setSubmitError(cause instanceof Error ? cause.message : 'Something went wrong.')

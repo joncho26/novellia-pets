@@ -1,4 +1,6 @@
 import type { DiagnosticType } from '@api/generated/prisma/enums'
+import type { PetDetailResponse } from './api/types'
+import { parseDateOnly } from './dates'
 import type { DraftErrors } from './useDrafts'
 
 // A diagnostic the user has typed into the form but not yet saved.
@@ -19,6 +21,18 @@ export function emptyDiagnosticDraft(): DiagnosticDraft {
     date: undefined,
     result: '',
     notes: '',
+  }
+}
+
+export function diagnosticDraftFrom(
+  diagnostic: PetDetailResponse['diagnostics'][number],
+): DiagnosticDraft {
+  return {
+    key: diagnostic.id,
+    type: diagnostic.type,
+    date: parseDateOnly(diagnostic.date),
+    result: diagnostic.result ?? '',
+    notes: diagnostic.notes ?? '',
   }
 }
 

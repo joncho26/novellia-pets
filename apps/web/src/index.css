@@ -25,6 +25,14 @@
   --color-accent-line: rgba(80, 0, 20, 0.45);
   --color-danger: #b3261e;
 
+  /* Medication status. Carried by a dot rather than a word, so these are the
+     one place in the app where hue alone distinguishes meaning — every dot is
+     paired with a text label for anyone who can't use the color. */
+  --color-status-completed: #1a7f37;
+  --color-status-active: #0969da;
+  --color-status-unknown: #8250df;
+  --color-status-discontinued: #6e7781;
+
   --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-heading: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, Consolas, monospace;
@@ -47,6 +55,12 @@
     --color-accent-soft: rgba(224, 138, 155, 0.15);
     --color-accent-line: rgba(224, 138, 155, 0.5);
     --color-danger: #f2b8b5;
+
+    /* Lifted for contrast against the dark page. */
+    --color-status-completed: #3fb950;
+    --color-status-active: #58a6ff;
+    --color-status-unknown: #bc8cff;
+    --color-status-discontinued: #8b949e;
 
     --shadow-panel:
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;

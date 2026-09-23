@@ -1,21 +1,21 @@
 import { useId, useState, type FormEvent } from 'react'
 import { PetSex, PetType } from '@api/generated/prisma/enums'
-import { createPet } from '../api/client'
-import type { CreatePetRequest } from '../api/types'
+import { updatePet } from '../api/client'
+import type { PetDetailResponse } from '../api/types'
 import { toDateOnly } from '../dates'
-import { emptyPetForm, validatePetForm, type PetFormErrors } from '../petForm'
+import { petFormFrom, validatePetForm, type PetFormErrors } from '../petForm'
 import { AttachmentModalShell } from './AttachmentModalShell'
 import { PetFormFields } from './PetFormFields'
 
-type AddPetModalProps = {
-  ownerId: string
+type EditPetModalProps = {
+  pet: PetDetailResponse
   onClose: () => void
-  onCreated: () => void
+  onSaved: () => void
 }
 
-export function AddPetModal({ ownerId, onClose, onCreated }: AddPetModalProps) {
+export function EditPetModal({ pet, onClose, onSaved }: EditPetModalProps) {
   const fieldId = useId()
-  const [form, setForm] = useState(emptyPetForm)
+  const [form, setForm] = useState(() => petFormFrom(pet))
   const [errors, setErrors] = useState<PetFormErrors>({})
   const [error, setError] = useState<string | null>(null)
   const [isSaving, setIsSaving] = useState(false)
@@ -27,25 +27,24 @@ export function AddPetModal({ ownerId, onClose, onCreated }: AddPetModalProps) {
     setErrors(nextErrors)
     if (Object.keys(nextErrors).length > 0) return
 
-    // validatePetForm() proved these are set; the casts carry that through.
-    const pet: CreatePetRequest = {
-      name: form.name.trim(),
-      type: form.type as PetType,
-      breed: form.breed.trim() || null,
-      dateOfBirth: toDateOnly(form.dateOfBirth as Date),
-      weight: Number(form.weight),
-      weightUnit: form.weightUnit,
-      sex: form.sex as PetSex,
-      neutered: form.neutered === '' ? null : form.neutered === 'yes',
-      ownerId,
-    }
-
     setIsSaving(true)
     setError(null)
 
     try {
-      await createPet(pet)
-      onCreated()
+      // Every field is sent rather than a diff. That also sidesteps a quirk in
+      // UpdatePetDto, where `type` is the one field missing @IsOptional and so
+      // is rejected when absent from a PATCH.
+      await updatePet(pet.id, {
+        name: form.name.trim(),
+        type: form.type as PetType,
+        breed: form.breed.trim() || null,
+        dateOfBirth: toDateOnly(form.dateOfBirth as Date),
+        weight: Number(form.weight),
+        weightUnit: form.weightUnit,
+        sex: form.sex as PetSex,
+        neutered: form.neutered === '' ? null : form.neutered === 'yes',
+      })
+      onSaved()
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : 'Something went wrong.')
       setIsSaving(false)
@@ -54,8 +53,9 @@ export function AddPetModal({ ownerId, onClose, onCreated }: AddPetModalProps) {
 
   return (
     <AttachmentModalShell
-      title="Add a pet"
-      submitLabel="Add pet"
+      title={`Edit ${pet.name}`}
+      submitLabel="Save changes"
+      busyLabel="Saving…"
       isSaving={isSaving}
       error={error}
       onSubmit={handleSubmit}

@@ -11,7 +11,7 @@ type DiagnosticDraftFieldsProps = {
   errors: DiagnosticDraftErrors
   fieldId: string
   onChange: (patch: Partial<DiagnosticDraft>) => void
-  onRemove: () => void
+  onRemove?: () => void
 }
 
 export function DiagnosticDraftFields({

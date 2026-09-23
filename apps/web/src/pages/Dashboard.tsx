@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Plus } from 'lucide-react'
 import { AddPetModal } from '../components/AddPetModal'
 import { PetCard } from '../components/PetCard'
+import { DashboardStats } from '../components/DashboardStats'
 import { getDashboard } from '../api/client'
 import type { PetDashboardResponse } from '../api/types'
 import { CTA_BUTTON } from '../styles'
@@ -29,7 +30,7 @@ export function Dashboard() {
   }, [load])
 
   return (
-    <>
+    <div className="mx-auto w-full max-w-6xl">
       <header className="flex flex-wrap items-center justify-between gap-4">
         <h1 className="mb-6 font-heading text-[1.75rem] font-medium text-primary">Pet dashboard</h1>
         <button
@@ -43,11 +44,13 @@ export function Dashboard() {
         </button>
       </header>
 
+      {!isLoading && !error && pets.length > 0 && <DashboardStats pets={pets} />}
+
       {isLoading && <p>Loading…</p>}
       {error && <p className="text-danger">Could not load dashboard: {error}</p>}
       {!isLoading && !error && pets.length === 0 && <p className="opacity-55">No pets yet.</p>}
 
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(18rem,1fr))] gap-4">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] gap-4">
         {pets.map((pet) => (
           <PetCard key={pet.petId} pet={pet} />
         ))}
@@ -65,6 +68,6 @@ export function Dashboard() {
           }}
         />
       )}
-    </>
+    </div>
   )
 }

@@ -1,4 +1,6 @@
 import type { DosageUnit, MedicationStatus } from '@api/generated/prisma/enums'
+import type { PetDetailResponse } from './api/types'
+import { parseDateOnly } from './dates'
 import type { DraftErrors } from './useDrafts'
 
 // A medication the user has typed into the form but not yet saved. `key` is a
@@ -27,6 +29,24 @@ export function emptyMedicationDraft(): MedicationDraft {
     startDate: undefined,
     endDate: undefined,
     status: '',
+  }
+}
+
+// A saved medication, filled back into the form that created it. The dates go
+// through parseDateOnly so the calendar opens on the stored day rather than the
+// one before it.
+export function medicationDraftFrom(
+  medication: PetDetailResponse['medications'][number],
+): MedicationDraft {
+  return {
+    key: medication.id,
+    name: medication.name,
+    dosageAmount: String(medication.dosageAmount),
+    dosageUnit: medication.dosageUnit,
+    frequency: medication.frequency,
+    startDate: parseDateOnly(medication.startDate),
+    endDate: medication.endDate ? parseDateOnly(medication.endDate) : undefined,
+    status: medication.status,
   }
 }
 

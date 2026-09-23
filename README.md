@@ -5,6 +5,9 @@
 
 This will set up the database responsible for storing the data in this application.  Within Docker Desktop, you should see this after running the command:
 
+<img width="1372" height="129" alt="Screenshot 2026-09-23 at 14 30 21" src="https://github.com/user-attachments/assets/5c34cd7d-e6a6-4c97-a3f7-b65ac075b8f5" />
+
+
 
 
 ## Run migrations 
@@ -37,5 +40,8 @@ npm run dev
 ```
 
 #### Visit http://localhost:5173 in the browser and you should see this:
+
+<img width="1797" height="995" alt="Screenshot 2026-09-23 at 14 44 38" src="https://github.com/user-attachments/assets/a0190eed-b5d5-40d0-9ba6-8c42d44657f8" />
+
 
 

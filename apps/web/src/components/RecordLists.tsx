@@ -7,10 +7,10 @@ import {
   deleteTreatment,
 } from '../api/client'
 import type { PetDetailResponse } from '../api/types'
-import { EditDiagnosticModal } from './EditDiagnosticModal'
-import { EditImmunizationModal } from './EditImmunizationModal'
-import { EditMedicationModal } from './EditMedicationModal'
-import { EditTreatmentModal } from './EditTreatmentModal'
+import { EditDiagnosticModal } from './modals/EditDiagnosticModal'
+import { EditImmunizationModal } from './modals/EditImmunizationModal'
+import { EditMedicationModal } from './modals/EditMedicationModal'
+import { EditTreatmentModal } from './modals/EditTreatmentModal'
 import { RowActions } from './RowActions'
 import { formatDateOnly as formatDate } from '../dates'
 import {

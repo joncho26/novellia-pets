@@ -6,9 +6,9 @@ import type { MedicalRecordDetailResponse } from '../api/types'
 import { formatDateOnly as formatDate } from '../dates'
 import { PET_TYPE_ICON } from '../petLabels'
 import { SectionHeading } from '../components/SectionHeading'
-import { EditMedicalRecordModal } from '../components/EditMedicalRecordModal'
-import { ConfirmDialog } from '../components/ConfirmDialog'
-import { AddAttachmentModal, type AttachmentKind } from '../components/AddAttachmentModal'
+import { EditMedicalRecordModal } from '../components/modals/EditMedicalRecordModal'
+import { ConfirmDialog } from '../components/modals/ConfirmDialog'
+import { AddAttachmentModal, type AttachmentKind } from '../components/modals/AddAttachmentModal'
 import { STYLES } from '../styles'
 import {
   DiagnosticList,

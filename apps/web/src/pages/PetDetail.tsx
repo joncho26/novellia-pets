@@ -5,42 +5,42 @@ import { deletePet, getPet } from '../api/client'
 import type { PetDetailResponse } from '../api/types'
 import { formatDateOnly as formatDate, parseDateOnly } from '../dates'
 import { PET_SEX_LABEL, PET_TYPE_ICON, PET_TYPE_LABEL } from '../petLabels'
-import { FilterableSection } from '../components/FilterableSection'
-import { MedicationFilterFields } from '../components/MedicationFilterFields'
+import { FilterableSection } from '../components/filters/FilterableSection'
+import { MedicationFilterFields } from '../components/filters/MedicationFilterFields'
 import {
   applyMedicationFilter,
   countMedicationFilters,
   emptyMedicationFilter,
-} from '../medicationFilter'
-import { ImmunizationFilterFields } from '../components/ImmunizationFilterFields'
-import { DiagnosticFilterFields } from '../components/DiagnosticFilterFields'
-import { TreatmentFilterFields } from '../components/TreatmentFilterFields'
-import { MedicalRecordFilterFields } from '../components/MedicalRecordFilterFields'
+} from '../components/filters/medicationFilter'
+import { ImmunizationFilterFields } from '../components/filters/ImmunizationFilterFields'
+import { DiagnosticFilterFields } from '../components/filters/DiagnosticFilterFields'
+import { TreatmentFilterFields } from '../components/filters/TreatmentFilterFields'
+import { MedicalRecordFilterFields } from '../components/filters/MedicalRecordFilterFields'
 import {
   applyImmunizationFilter,
   countImmunizationFilters,
   emptyImmunizationFilter,
   vaccineOptionsFrom,
-} from '../immunizationFilter'
+} from '../components/filters/immunizationFilter'
 import {
   applyDiagnosticFilter,
   countDiagnosticFilters,
   emptyDiagnosticFilter,
-} from '../diagnosticFilter'
+} from '../components/filters/diagnosticFilter'
 import {
   applyTreatmentFilter,
   countTreatmentFilters,
   emptyTreatmentFilter,
-} from '../treatmentFilter'
+} from '../components/filters/treatmentFilter'
 import {
   applyMedicalRecordFilter,
   countMedicalRecordFilters,
   emptyMedicalRecordFilter,
-} from '../medicalRecordFilter'
-import { AddMedicalRecordModal } from '../components/AddMedicalRecordModal'
-import { AddAttachmentModal, type AttachmentKind } from '../components/AddAttachmentModal'
-import { EditPetModal } from '../components/EditPetModal'
-import { ConfirmDialog } from '../components/ConfirmDialog'
+} from '../components/filters/medicalRecordFilter'
+import { AddMedicalRecordModal } from '../components/modals/AddMedicalRecordModal'
+import { AddAttachmentModal, type AttachmentKind } from '../components/modals/AddAttachmentModal'
+import { EditPetModal } from '../components/modals/EditPetModal'
+import { ConfirmDialog } from '../components/modals/ConfirmDialog'
 import { STYLES } from '../styles'
 import {
   DiagnosticList,

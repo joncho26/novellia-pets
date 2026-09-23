@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Pencil, Trash2 } from 'lucide-react'
-import { ConfirmDialog } from './ConfirmDialog'
+import { ConfirmDialog } from './modals/ConfirmDialog'
 
 // Smaller than the page-level icon buttons: these sit inside a list row and
 // should not outweigh the text they belong to.

@@ -5,7 +5,38 @@ import { deletePet, getPet } from '../api/client'
 import type { PetDetailResponse } from '../api/types'
 import { formatDateOnly as formatDate, parseDateOnly } from '../dates'
 import { PET_SEX_LABEL, PET_TYPE_ICON, PET_TYPE_LABEL } from '../petLabels'
-import { SectionHeading } from '../components/SectionHeading'
+import { FilterableSection } from '../components/FilterableSection'
+import { MedicationFilterFields } from '../components/MedicationFilterFields'
+import {
+  applyMedicationFilter,
+  countMedicationFilters,
+  emptyMedicationFilter,
+} from '../medicationFilter'
+import { ImmunizationFilterFields } from '../components/ImmunizationFilterFields'
+import { DiagnosticFilterFields } from '../components/DiagnosticFilterFields'
+import { TreatmentFilterFields } from '../components/TreatmentFilterFields'
+import { MedicalRecordFilterFields } from '../components/MedicalRecordFilterFields'
+import {
+  applyImmunizationFilter,
+  countImmunizationFilters,
+  emptyImmunizationFilter,
+  vaccineOptionsFrom,
+} from '../immunizationFilter'
+import {
+  applyDiagnosticFilter,
+  countDiagnosticFilters,
+  emptyDiagnosticFilter,
+} from '../diagnosticFilter'
+import {
+  applyTreatmentFilter,
+  countTreatmentFilters,
+  emptyTreatmentFilter,
+} from '../treatmentFilter'
+import {
+  applyMedicalRecordFilter,
+  countMedicalRecordFilters,
+  emptyMedicalRecordFilter,
+} from '../medicalRecordFilter'
 import { AddMedicalRecordModal } from '../components/AddMedicalRecordModal'
 import { AddAttachmentModal, type AttachmentKind } from '../components/AddAttachmentModal'
 import { EditPetModal } from '../components/EditPetModal'
@@ -77,6 +108,21 @@ function PetRecord({ pet, onChanged }: { pet: PetDetailResponse; onChanged: () =
     pet.immunizations.length +
     pet.medicalRecords.length
 
+  const [medicationFilter, setMedicationFilter] = useState(emptyMedicationFilter)
+  const filteredMedications = applyMedicationFilter(pet.medications, medicationFilter)
+
+  const [immunizationFilter, setImmunizationFilter] = useState(emptyImmunizationFilter)
+  const filteredImmunizations = applyImmunizationFilter(pet.immunizations, immunizationFilter)
+
+  const [diagnosticFilter, setDiagnosticFilter] = useState(emptyDiagnosticFilter)
+  const filteredDiagnostics = applyDiagnosticFilter(pet.diagnostics, diagnosticFilter)
+
+  const [treatmentFilter, setTreatmentFilter] = useState(emptyTreatmentFilter)
+  const filteredTreatments = applyTreatmentFilter(pet.treatments, treatmentFilter)
+
+  const [recordFilter, setRecordFilter] = useState(emptyMedicalRecordFilter)
+  const filteredRecords = applyMedicalRecordFilter(pet.medicalRecords, recordFilter)
+
   // Lets each entry below say which visit it came from. No extra request: the
   // pet's own records are already in this payload.
   const visits = new Map(pet.medicalRecords.map((record) => [record.id, record.recordDate]))
@@ -128,50 +174,104 @@ function PetRecord({ pet, onChanged }: { pet: PetDetailResponse; onChanged: () =
         {pet.microchipId && <Fact label="Microchip" value={pet.microchipId} />}
       </dl>
 
-      <section>
-        <SectionHeading icon={Pill} level={2} action={{ label: 'Add a medication', onClick: () => setAdding('medication') }}>
-          All medications
-        </SectionHeading>
-        <MedicationList items={pet.medications} visits={visits} onChanged={onChanged} />
-      </section>
+      <FilterableSection
+        icon={Pill}
+        title="All medications"
+        action={{ label: 'Add a medication', onClick: () => setAdding('medication') }}
+        filters={
+          <MedicationFilterFields
+            filter={medicationFilter}
+            onChange={(patch) => setMedicationFilter((current) => ({ ...current, ...patch }))}
+          />
+        }
+        activeCount={countMedicationFilters(medicationFilter)}
+        onClear={() => setMedicationFilter(emptyMedicationFilter())}
+        total={pet.medications.length}
+        shown={filteredMedications.length}
+      >
+        <MedicationList items={filteredMedications} visits={visits} onChanged={onChanged} />
+      </FilterableSection>
 
-      <section>
-        <SectionHeading icon={Syringe} level={2} action={{ label: 'Add an immunization', onClick: () => setAdding('immunization') }}>
-          All immunizations
-        </SectionHeading>
-        <ImmunizationList items={pet.immunizations} petId={pet.id} visits={visits} onChanged={onChanged} />
-      </section>
+      <FilterableSection
+        icon={Syringe}
+        title="All immunizations"
+        action={{ label: 'Add an immunization', onClick: () => setAdding('immunization') }}
+        filters={
+          <ImmunizationFilterFields
+            vaccines={vaccineOptionsFrom(pet.immunizations)}
+            filter={immunizationFilter}
+            onChange={(patch) => setImmunizationFilter((current) => ({ ...current, ...patch }))}
+          />
+        }
+        activeCount={countImmunizationFilters(immunizationFilter)}
+        onClear={() => setImmunizationFilter(emptyImmunizationFilter())}
+        total={pet.immunizations.length}
+        shown={filteredImmunizations.length}
+      >
+        <ImmunizationList items={filteredImmunizations} petId={pet.id} visits={visits} onChanged={onChanged} />
+      </FilterableSection>
 
-      <section>
-        <SectionHeading icon={Stethoscope} level={2} action={{ label: 'Add a diagnostic', onClick: () => setAdding('diagnostic') }}>
-          All diagnostics
-        </SectionHeading>
-        <DiagnosticList items={pet.diagnostics} visits={visits} onChanged={onChanged} />
-      </section>
+      <FilterableSection
+        icon={Stethoscope}
+        title="All diagnostics"
+        action={{ label: 'Add a diagnostic', onClick: () => setAdding('diagnostic') }}
+        filters={
+          <DiagnosticFilterFields
+            filter={diagnosticFilter}
+            onChange={(patch) => setDiagnosticFilter((current) => ({ ...current, ...patch }))}
+          />
+        }
+        activeCount={countDiagnosticFilters(diagnosticFilter)}
+        onClear={() => setDiagnosticFilter(emptyDiagnosticFilter())}
+        total={pet.diagnostics.length}
+        shown={filteredDiagnostics.length}
+      >
+        <DiagnosticList items={filteredDiagnostics} visits={visits} onChanged={onChanged} />
+      </FilterableSection>
 
-      <section>
-        <SectionHeading icon={ClipboardList} level={2} action={{ label: 'Add a treatment', onClick: () => setAdding('treatment') }}>
-          All treatments
-        </SectionHeading>
-        <TreatmentList items={pet.treatments} visits={visits} onChanged={onChanged} />
-      </section>
+      <FilterableSection
+        icon={ClipboardList}
+        title="All treatments"
+        action={{ label: 'Add a treatment', onClick: () => setAdding('treatment') }}
+        filters={
+          <TreatmentFilterFields
+            filter={treatmentFilter}
+            onChange={(patch) => setTreatmentFilter((current) => ({ ...current, ...patch }))}
+          />
+        }
+        activeCount={countTreatmentFilters(treatmentFilter)}
+        onClear={() => setTreatmentFilter(emptyTreatmentFilter())}
+        total={pet.treatments.length}
+        shown={filteredTreatments.length}
+      >
+        <TreatmentList items={filteredTreatments} visits={visits} onChanged={onChanged} />
+      </FilterableSection>
 
-      <section>
-        <SectionHeading
-          icon={ClipboardList}
-          level={2}
-          action={{ label: 'Add medical record', onClick: () => setIsAddingRecord(true) }}
-        >
-          Medical records
-        </SectionHeading>
-        {pet.medicalRecords.length === 0 ? (
-          <p className={EMPTY}>None recorded</p>
+      <FilterableSection
+        icon={ClipboardList}
+        title="Medical records"
+        action={{ label: 'Add medical record', onClick: () => setIsAddingRecord(true) }}
+        filters={
+          <MedicalRecordFilterFields
+            filter={recordFilter}
+            onChange={(patch) => setRecordFilter((current) => ({ ...current, ...patch }))}
+          />
+        }
+        activeCount={countMedicalRecordFilters(recordFilter)}
+        onClear={() => setRecordFilter(emptyMedicalRecordFilter())}
+        total={pet.medicalRecords.length}
+        shown={filteredRecords.length}
+      >
+        {filteredRecords.length === 0 ? (
+          <p className={EMPTY}>
+            {pet.medicalRecords.length === 0 ? 'None recorded' : 'No matches'}
+          </p>
         ) : (
           // A list of links rather than a list with links in it: the whole row
           // is the target, and the date leads because it is what distinguishes
           // one visit from another.
           <ul className="m-0 flex list-none flex-col gap-1 p-0">
-            {pet.medicalRecords.map((record) => (
+            {filteredRecords.map((record) => (
               <li key={record.id}>
                 <Link
                   to={`/medical-records/${record.id}`}
@@ -187,7 +287,7 @@ function PetRecord({ pet, onChanged }: { pet: PetDetailResponse; onChanged: () =
             ))}
           </ul>
         )}
-      </section>
+      </FilterableSection>
 
       {adding && (
         <AddAttachmentModal

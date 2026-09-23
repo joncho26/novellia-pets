@@ -5,7 +5,7 @@ import { ConfirmDialog } from './ConfirmDialog'
 // Smaller than the page-level icon buttons: these sit inside a list row and
 // should not outweigh the text they belong to.
 const ROW_BUTTON =
-  'inline-flex cursor-pointer items-center justify-center rounded-[0.3rem] border border-transparent p-1 align-middle opacity-55 transition-colors duration-200 hover:opacity-100'
+  'inline-flex cursor-pointer items-center justify-center rounded-full border border-transparent p-1 align-middle opacity-55 transition-colors duration-200 hover:opacity-100'
 
 type RowActionsProps = {
   // Names the row in the button labels and the confirmation, so "Delete" is

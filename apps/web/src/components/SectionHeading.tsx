@@ -1,4 +1,5 @@
 import { Plus, type LucideIcon } from 'lucide-react'
+import type { ReactNode } from 'react'
 
 type SectionHeadingProps = {
   icon: LucideIcon
@@ -9,6 +10,9 @@ type SectionHeadingProps = {
   // Renders an add button on the right of the heading. `label` is the full
   // phrase for screen readers, since the visible text is only "Add".
   action?: { label: string; onClick?: () => void }
+  // Sits to the left of the add button, for controls that belong to the
+  // section rather than to the page — the filter toggle, today.
+  trailing?: ReactNode
 }
 
 // Shared by the dashboard cards and the pet detail page. The headings carry the
@@ -20,6 +24,7 @@ export function SectionHeading({
   level = 3,
   children,
   action,
+  trailing,
 }: SectionHeadingProps) {
   const Heading = level === 2 ? 'h2' : 'h3'
 
@@ -27,18 +32,23 @@ export function SectionHeading({
     <Heading className="mt-4 mb-[0.35rem] flex items-center gap-1.5 text-[0.8rem] font-semibold tracking-[0.04em] text-secondary uppercase">
       <Icon size={14} aria-hidden="true" />
       {children}
-      {/* ml-auto rather than justify-between: headings without an action keep
+      {/* ml-auto rather than justify-between: headings without controls keep
           their icon and text tight together. */}
-      {action && (
-        <button
-          type="button"
-          aria-label={action.label}
-          onClick={action.onClick}
-          className="ml-auto inline-flex cursor-pointer items-center gap-1 rounded-[0.3rem] border border-line px-2 py-1 text-[0.7rem] font-semibold tracking-[0.04em] uppercase transition-colors duration-200 hover:border-accent-line hover:bg-accent-soft"
-        >
-          <Plus size={12} aria-hidden="true" />
-          Add
-        </button>
+      {(trailing || action) && (
+        <span className="ml-auto flex items-center gap-1.5">
+          {trailing}
+          {action && (
+            <button
+              type="button"
+              aria-label={action.label}
+              title={action.label}
+              onClick={action.onClick}
+              className="inline-flex cursor-pointer items-center justify-center rounded-full border border-line p-1.5 transition-colors duration-200 hover:border-accent-line hover:bg-accent-soft"
+            >
+              <Plus size={12} aria-hidden="true" />
+            </button>
+          )}
+        </span>
       )}
     </Heading>
   )

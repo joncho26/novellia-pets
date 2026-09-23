@@ -37,6 +37,7 @@ export function ImmunizationFilterFields({
         <DateField
           id={`${id}-admin-from`}
           className={STYLES.CONTROL}
+          overlay
           value={filter.administeredFrom}
           onChange={(value) => onChange({ administeredFrom: value })}
         />
@@ -46,6 +47,7 @@ export function ImmunizationFilterFields({
         <DateField
           id={`${id}-admin-to`}
           className={STYLES.CONTROL}
+          overlay
           value={filter.administeredTo}
           onChange={(value) => onChange({ administeredTo: value })}
         />
@@ -55,6 +57,7 @@ export function ImmunizationFilterFields({
         <DateField
           id={`${id}-due-from`}
           className={STYLES.CONTROL}
+          overlay
           allowFuture
           value={filter.dueFrom}
           onChange={(value) => onChange({ dueFrom: value })}
@@ -65,6 +68,7 @@ export function ImmunizationFilterFields({
         <DateField
           id={`${id}-due-to`}
           className={STYLES.CONTROL}
+          overlay
           allowFuture
           value={filter.dueTo}
           onChange={(value) => onChange({ dueTo: value })}

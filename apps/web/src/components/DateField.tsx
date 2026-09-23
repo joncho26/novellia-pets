@@ -46,6 +46,10 @@ type DateFieldProps = {
   describedBy?: string
   // A birthday can't be in the future, but a medication's end date can.
   allowFuture?: boolean
+  // Float the calendar over the page instead of pushing the layout open.
+  // Right inside a filter panel, whose height would otherwise jump; wrong
+  // inside a modal, where the scrolling panel would clip it.
+  overlay?: boolean
 }
 
 export function DateField({
@@ -56,6 +60,7 @@ export function DateField({
   invalid,
   describedBy,
   allowFuture = false,
+  overlay = false,
 }: DateFieldProps) {
   const [isOpen, setIsOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -89,7 +94,7 @@ export function DateField({
   }, [isOpen])
 
   return (
-    <div ref={containerRef}>
+    <div ref={containerRef} className={overlay ? 'relative' : undefined}>
       {/* The icon sits over the input's right padding. pointer-events-none so
           clicking it still opens the calendar through the input beneath. */}
       <div className="relative flex items-center">
@@ -119,14 +124,18 @@ export function DateField({
         />
       </div>
 
-      {/* In flow rather than floating: the dialog scrolls on short screens, and
-          an absolutely positioned calendar would be clipped by that scroll
-          container. */}
+      {/* In flow by default: a modal's panel scrolls on short screens, and an
+          absolutely positioned calendar would be clipped by that scroll
+          container. Filter panels pass `overlay` instead. */}
       {isOpen && (
         <div
           role="dialog"
           aria-label="Choose a date"
-          className={`mt-2 flex justify-center rounded-lg border border-line bg-page p-2 text-[0.9rem] text-heading ${CHEVRON_COLOR}`}
+          className={`flex justify-center rounded-lg border border-line bg-page p-2 text-[0.9rem] text-heading ${CHEVRON_COLOR} ${
+            overlay
+              ? 'absolute top-full left-0 z-20 mt-1 w-max shadow-panel'
+              : 'mt-2'
+          }`}
         >
           <DayPicker
             mode="single"

@@ -46,6 +46,7 @@ export function DiagnosticFilterFields({
         <DateField
           id={`${id}-from`}
           className={STYLES.CONTROL}
+          overlay
           value={filter.from}
           onChange={(value) => onChange({ from: value })}
         />
@@ -55,6 +56,7 @@ export function DiagnosticFilterFields({
         <DateField
           id={`${id}-to`}
           className={STYLES.CONTROL}
+          overlay
           value={filter.to}
           onChange={(value) => onChange({ to: value })}
         />

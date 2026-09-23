@@ -46,6 +46,7 @@ export function MedicationFilterFields({
         <DateField
           id={`${id}-from`}
           className={STYLES.CONTROL}
+          overlay
           allowFuture
           value={filter.startedFrom}
           onChange={(value) => onChange({ startedFrom: value })}
@@ -56,6 +57,7 @@ export function MedicationFilterFields({
         <DateField
           id={`${id}-to`}
           className={STYLES.CONTROL}
+          overlay
           allowFuture
           value={filter.startedTo}
           onChange={(value) => onChange({ startedTo: value })}

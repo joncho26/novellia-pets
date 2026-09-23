@@ -66,3 +66,7 @@ Visit `http://localhost:5173` in the browser and you should see this:
 
 
 
+
+## Miscellaneous
+Initial schema design
+<img width="1328" height="752" alt="Screenshot 2026-09-23 at 10 30 18" src="https://github.com/user-attachments/assets/95dce89d-81cf-44e0-93e1-de3b25068f14" />

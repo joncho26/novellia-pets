@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsBoolean, IsDate, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsDate, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString } from 'class-validator';
 import { PetSex, PetType, WeightUnit } from "../../generated/prisma/enums"
 
 export class CreatePetDto {
@@ -32,6 +32,7 @@ export class CreatePetDto {
     dateOfBirth: Date
 
     @IsNumber()
+    @IsPositive()
     weight: number
 
     @IsEnum(WeightUnit)

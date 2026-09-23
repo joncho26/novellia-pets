@@ -1,7 +1,7 @@
 import { HttpException, Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { Prisma } from "../generated/prisma/client";
-import { MedicalRecordDetail } from "./types/MedicalRecordDetail";
+import { MedicalRecordDetailsDto, MedicalRecordDto, MedicalRecordWithEntriesDto } from "./dtos/MedicalRecord.dto";
 
 @Injectable()
 export class MedicalRecordsService {
@@ -10,7 +10,7 @@ export class MedicalRecordsService {
     async createMedicalRecord(
         petId: string,
         data: Prisma.MedicalRecordUncheckedCreateWithoutPetInput,
-    ) {
+    ): Promise<MedicalRecordWithEntriesDto> {
         await this.assertPetExists(petId);
 
         return this.prisma.medicalRecord.create({
@@ -27,7 +27,7 @@ export class MedicalRecordsService {
     // The visits themselves, without their contents: this is the list a pet's
     // page pages through, and pulling every child of every visit is what the
     // per-record read is for.
-    async getMedicalRecordsByPetId(petId: string) {
+    async getMedicalRecordsByPetId(petId: string): Promise<MedicalRecordDto[]> {
         await this.assertPetExists(petId);
 
         return this.prisma.medicalRecord.findMany({
@@ -41,7 +41,7 @@ export class MedicalRecordsService {
         if (!pet) throw new NotFoundException('Pet not found');
     }
 
-    getMedicalRecords() {
+    async getMedicalRecords(): Promise<MedicalRecordWithEntriesDto[]> {
         return this.prisma.medicalRecord.findMany({
             include: {
                 medications: true,
@@ -52,7 +52,7 @@ export class MedicalRecordsService {
         });
     }
 
-    getMedicalRecordById(id: string): Promise<MedicalRecordDetail | null> {
+    getMedicalRecordById(id: string): Promise<MedicalRecordDetailsDto | null> {
         return this.prisma.medicalRecord.findUnique({
             where: { id },
             include: {
@@ -80,14 +80,14 @@ export class MedicalRecordsService {
         })
     }
 
-    async deleteMedicalRecordById(id: string) {
+    async deleteMedicalRecordById(id: string): Promise<MedicalRecordDto> {
         const medicalRecord = await this.getMedicalRecordRefById(id);
         if(!medicalRecord) throw new HttpException('Medical record not Found', 404);
 
         return this.prisma.medicalRecord.delete({ where: { id } });
     }
 
-    async updateMedicalRecordById(id: string, data: Prisma.MedicalRecordUncheckedUpdateInput) {
+    async updateMedicalRecordById(id: string, data: Prisma.MedicalRecordUncheckedUpdateInput): Promise<MedicalRecordWithEntriesDto> {
         const medicalRecord = await this.getMedicalRecordRefById(id);
 
         if (!medicalRecord) throw new HttpException('Medical record not Found', 404);

@@ -2,13 +2,15 @@ import { Body, Controller, Delete, Get, NotFoundException, Param, ParseUUIDPipe,
 import { PetsService } from "./pets.service";
 import { CreatePetDto } from "./dtos/CreatePet.dto";
 import { UpdatePetDto } from "./dtos/UpdatePet.dto";
+import { EmergencyContact } from "../generated/prisma/client";
+import { PetDto } from "./dtos/Pet.dto";
 
 @Controller('pets')
 export class PetsController {
     constructor(private petsService: PetsService){}
 
     @Post()
-    createPet(@Body() createPetDto: CreatePetDto) {
+    createPet(@Body() createPetDto: CreatePetDto): Promise<PetDto> {
         return this.petsService.createPet(createPetDto);
     }
 
@@ -26,7 +28,7 @@ export class PetsController {
     }
 
     @Get(':id/vet-contacts')
-    async getVetContactsByPetId(@Param('id', ParseUUIDPipe) id: string) {
+    async getVetContactsByPetId(@Param('id', ParseUUIDPipe) id: string): Promise<EmergencyContact[]> {
         const contacts = await this.petsService.getVetContactsByPetId(id);
         if (!contacts) throw new NotFoundException("Pet not found");
 

@@ -31,9 +31,8 @@ export function EditPetModal({ pet, onClose, onSaved }: EditPetModalProps) {
     setError(null)
 
     try {
-      // Every field is sent rather than a diff. That also sidesteps a quirk in
-      // UpdatePetDto, where `type` is the one field missing @IsOptional and so
-      // is rejected when absent from a PATCH.
+      // Every field is sent rather than a diff: the form holds them all
+      // already, and a PATCH of the whole thing is the same write.
       await updatePet(pet.id, {
         name: form.name.trim(),
         type: form.type as PetType,

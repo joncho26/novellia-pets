@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsArray, IsDate, IsNotEmpty, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { IsArray, IsDate, IsOptional, IsString, IsUUID, ValidateNested } from 'class-validator';
 import { TreatmentDetailsDto } from "../../treatments/dtos/CreateTreatment.dto";
 import { ImmunizationDetailsDto } from "../../immunizations/dtos/CreateImmunization.dto";
 import { DiagnosticDetailsDto } from "../../diagnostics/dtos/CreateDiagnostic.dto";
@@ -7,11 +7,10 @@ import { MedicationDetailsDto } from "../../medications/dtos/CreateMedication.dt
 
 export class CreateMedicalRecordDto {
     @IsDate()
-    @IsNotEmpty()
     @Type(() => Date)
-    recordDate: string
+    recordDate: Date
 
-    @IsString()
+    @IsUUID()
     @IsOptional()
     vetContactId?: string
 
@@ -19,9 +18,9 @@ export class CreateMedicalRecordDto {
     @IsOptional()
     vetName?: string
 
-    @IsNotEmpty()
+    @IsString()
     @IsOptional()
-    notes: string
+    notes?: string
 
     // A visit and everything recorded during it arrive together, so they are
     // written together. Same nesting the PATCH route already accepts.

@@ -1,6 +1,7 @@
 import type { DashboardView, PetDashboard } from '@api/dashboard/types/PetDashboard'
-import type { PetDetail, PetDetailMedicalRecord, VetContact } from '@api/pets/types/PetDetail'
-import type { MedicalRecordDetail } from '@api/medical-records/types/MedicalRecordDetail'
+import type { PetDetailMedicalRecord, PetDetailsDto, PetDto, VetContactDto } from '@api/pets/dtos/Pet.dto'
+import type { MedicalRecordDetailsDto } from '@api/medical-records/dtos/MedicalRecord.dto'
+import type { VaccineDto } from '@api/vaccines/dtos/Vaccine.dto'
 import type {
   DiagnosticType,
   DosageUnit,
@@ -22,13 +23,18 @@ export type Serialized<T> = T extends Date
 
 export type PetDashboardResponse = Serialized<PetDashboard>
 export type DashboardResponse = Serialized<DashboardView>
-export type PetDetailResponse = Serialized<PetDetail>
-export type MedicalRecordDetailResponse = Serialized<MedicalRecordDetail>
+export type PetDetailResponse = Serialized<PetDetailsDto>
+
+// What POST /pets, PATCH /pets/:id and DELETE /pets/:id hand back: the pet's
+// own columns, without its history. The client helpers only read `id` off
+// these, but the full shape is what actually arrives.
+export type PetResponse = Serialized<PetDto>
+export type MedicalRecordDetailResponse = Serialized<MedicalRecordDetailsDto>
 
 // GET /pets/:petId/medical-records returns the visits without their contents.
 // The row also carries petId and timestamps, which nothing here reads.
 export type MedicalRecordSummaryResponse = Serialized<PetDetailMedicalRecord>
-export type VetContactResponse = Serialized<VetContact>
+export type VetContactResponse = Serialized<VetContactDto>
 
 // Mirrors MedicationDetailsDto: a medication's own fields, with no link to a
 // pet or a record. Both the standalone and the nested forms build on it.
@@ -70,14 +76,10 @@ export interface CreateTreatmentRequest extends TreatmentDetailsRequest {
 // something an edit form changes.
 export type UpdateTreatmentRequest = Partial<TreatmentDetailsRequest>
 
-// The fields this app reads from a Vaccine. The endpoint also returns
-// timestamps, which nothing here uses.
-export interface VaccineResponse {
-  id: string
-  name: string
-  species: PetType
-  defaultIntervalMonths: number | null
-}
+// Derived from the server's own shape rather than restated here, so a change
+// to the catalog row surfaces as a build error instead of silent drift. It
+// carries timestamps that nothing in this app reads.
+export type VaccineResponse = Serialized<VaccineDto>
 
 // Mirrors ImmunizationDetailsDto.
 export interface ImmunizationDetailsRequest {
@@ -118,8 +120,8 @@ export interface CreateDiagnosticRequest extends DiagnosticDetailsRequest {
 
 export type UpdateDiagnosticRequest = Partial<DiagnosticDetailsRequest>
 
-// Mirrors UpdatePetDto. Every field optional, though the API currently
-// requires `type` on a PATCH — see the note in EditPetModal.
+// Mirrors UpdatePetDto. Every field optional: an omitted key leaves the stored
+// value alone.
 export type UpdatePetRequest = Partial<Omit<CreatePetRequest, 'ownerId'>>
 
 // Mirrors CreateMedicalRecordDto. petId travels in the URL, not the body, and
@@ -135,8 +137,10 @@ export interface CreateMedicalRecordRequest {
   immunizations?: ImmunizationDetailsRequest[]
 }
 
-// Mirrors CreatePetDto. The DTO itself is a decorated class, so importing it
-// here would drag NestJS-only syntax into the browser type graph.
+// Mirrors CreatePetDto, which is a decorated class. Deriving this from it the
+// way the response types are derived would work — the decorators erase — but
+// the optionality differs: `breed?: string | null` on the way in against
+// `breed: string | null` on the way out.
 export interface CreatePetRequest {
   name: string
   type: PetType

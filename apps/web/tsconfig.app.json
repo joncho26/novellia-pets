@@ -11,6 +11,13 @@
     "allowArbitraryExtensions": true,
     "skipLibCheck": true,
 
+    /* The API's response DTOs are decorated classes, and this app imports them
+       as types through @api/*. The decorators are erased — nothing from
+       class-validator reaches the bundle — but tsc still has to parse them
+       under the API's own settings to typecheck the file. */
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
+
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,

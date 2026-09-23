@@ -1,37 +1,38 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
+import { ImmunizationDto } from "./dtos/Immunization.dto";
 import { Prisma } from "../generated/prisma/client";
 
 @Injectable()
 export class ImmunizationsService {
     constructor(private prisma: PrismaService) {}
 
-    async getImmunizationsByPetId(petId: string) {
+    async getImmunizationsByPetId(petId: string): Promise<ImmunizationDto[]> {
         await this.assertPetExists(petId);
 
         return this.prisma.immunization.findMany({ where: { petId } });
     }
 
-    async createImmunization(petId: string, data: Prisma.ImmunizationUncheckedCreateWithoutPetInput) {
+    async createImmunization(petId: string, data: Prisma.ImmunizationUncheckedCreateWithoutPetInput): Promise<ImmunizationDto> {
         await this.assertPetExists(petId);
 
         return this.prisma.immunization.create({ data: { ...data, petId } });
     }
 
-    async getImmunizationById(id: string) {
+    async getImmunizationById(id: string): Promise<ImmunizationDto> {
         const immunization = await this.prisma.immunization.findUnique({ where: { id } });
         if (!immunization) throw new NotFoundException('Immunization not found');
 
         return immunization;
     }
 
-    async updateImmunizationById(id: string, data: Prisma.ImmunizationUncheckedUpdateInput) {
+    async updateImmunizationById(id: string, data: Prisma.ImmunizationUncheckedUpdateInput): Promise<ImmunizationDto> {
         await this.getImmunizationById(id);
 
         return this.prisma.immunization.update({ where: { id }, data });
     }
 
-    async deleteImmunizationById(id: string) {
+    async deleteImmunizationById(id: string): Promise<ImmunizationDto> {
         await this.getImmunizationById(id);
 
         return this.prisma.immunization.delete({ where: { id } });

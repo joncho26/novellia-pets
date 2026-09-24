@@ -1,5 +1,19 @@
+
+## Prerequisites
+Please ensure node version is up to date.  If using nvm, you can run the following:
+```
+nvm install 24.21.0
+nvm use 24.21.0
+```
+
+I'm using v24.21.0 (I believe node has to be at least v20)
+
 ## Set up PostgreSQL database container in Docker
+
+Ensure there is a .env file in `apps/api` directory.  If not, let me know and I can send it via email.
+
 ### In the root directory, run the following:
+
 
 ```docker compose up --build -d```
 

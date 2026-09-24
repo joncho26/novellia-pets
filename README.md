@@ -69,7 +69,7 @@ This will start the API server, which is running on port 3000.
 ## Run Web Server
 ### Open a new terminal window/tab and in the root directory, navigate to the web directory:
 1.  `cd apps/web`
-2.  npm install to install npm packages
+2.  `npm install` to install npm packages
 3.  `npm run dev` to start server
 
 <img width="434" height="162" alt="Screenshot 2026-09-23 at 15 00 04" src="https://github.com/user-attachments/assets/2c829fec-84cf-4e4e-b99a-0de915ca783d" />
